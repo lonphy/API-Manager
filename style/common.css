@@ -16,12 +16,9 @@ body>section {
 	margin-left:40px;
 	box-shadow: 0 0 3px rgba(0,0,0,.5);
 	background-color:rgba(0,0,0,.02);
-}
-
-
-#home-page {
 	position:relative;
 	min-height:100%;
+	box-sizing: border-box;
 }
 
 #nav {
@@ -32,7 +29,7 @@ body>section {
 	line-height:40px;
 	width:100%;
 	box-sizing: border-box;
-	bottom:14em;
+	bottom:40px;
 	-webkit-box-reflect: below -1px linear-gradient(0deg, rgba(255,255,255,.5), rgba(0,0,0,0));
 }
 
@@ -50,18 +47,26 @@ body>section {
 	top:0;
 	transition: all linear .1s;
 }
-#nav a:hover{
+#nav a:hover, #nav a.on{
 	top:-5px;
 	background-color:rgb(212, 93, 26)
 }
 
 #home-page h1 {
 	position:absolute;
-	top:120px;
+	top:calc(50vh - 78px);
 	font-size:64px;
 	text-align:center;
 	width:100%;
 	font-family:alice;
 	color:#1A1010;
 	-webkit-mask-image: -webkit-gradient(linear, left top, left bottom, from(rgba(0,0,0,1)), to(rgba(0,0,0,0))); 
+}
+
+/*--------------------------- project -------------------------------- */
+#project {
+	padding-top:100px;
+}
+#project #nav {
+	top: 20px;
 }
