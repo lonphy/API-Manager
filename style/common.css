@@ -9,6 +9,7 @@ body{
 	padding:1px;
 	box-sizing: border-box;
 	background:url(../images/bg.gif) repeat;
+    color:#444;
 }
 body>section {
 	width:calc(100% - 80px);
@@ -22,7 +23,7 @@ body>section {
 }
 
 #nav {
-	position:absolute;
+	position:fixed;
 	padding:0 5%;
 	display:flex;
 	height:40px;
@@ -67,6 +68,6 @@ body>section {
 #project {
 	padding-top:100px;
 }
-#project #nav {
+#project ~#nav {
 	top: 20px;
 }
