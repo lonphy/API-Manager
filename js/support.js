@@ -51,18 +51,18 @@
     		}
     		delete _callbacks[msg.data._id];
     	}
-    	
-    	
-	    function Service() {
+
+
+       function run() {
 	        var work = new SharedWorker('js/thread_db.js');
 	        var port = work.port;
 	        port.start();
 	        port.onmessage = MessageProc;
 	       	_thread = port;
 	    }
-	    
-	    Service.prototype = {
-	    	constructor: Service,
+
+       run.prototype = {
+           constructor: run,
 	    	
 	    	/**
 	    	 * 发送消息给服务线程
@@ -77,8 +77,8 @@
 	    		_thread.postMessage({_id:id, data:option});
 	    	}
 	    };
-	    
-	    Object.defineProperty(exports, 'Service', {value:new Service});
+
+       Object.defineProperty(exports, 'run', {value: new run});
     })(_L5);
     
     

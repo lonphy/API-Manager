@@ -1,4 +1,4 @@
-(function(C, util){
+(function (C, util, $) {
     "use strict";
     if (C['ProjectControl']) return;
     /**
@@ -13,13 +13,15 @@
 
     ProjectControl.prototype = {
         constructor: ProjectControl,
-        name:'project',
+        name: "project",
         /**
          * 获取一条记录
          * @param projectId 项目ID
          */
         get: function(projectId){
-
+            $.send({run: "test.get", param: {id: projectId}}, function (ret) {
+                console.log(ret);
+            }, this);
         },
 
         /**
@@ -37,4 +39,4 @@
     };
 
     Object.defineProperty(C, 'ProjectControl', {value:new ProjectControl});
-}(L5.Controls, L5.util));
+}(L5.Controls, L5.util, L5.run));

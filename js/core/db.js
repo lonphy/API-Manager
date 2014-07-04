@@ -4,12 +4,11 @@
  * @author lonphy
  * @version 1.0
  */
-(function() {
+(function (exports) {
     "use strict";
-
     var db = null,
         isInit = false;
-    window.Dao  = {
+    exports['db'] = {
         /**
          * 打开数据库
          * @param dbName 数据库名
@@ -38,7 +37,6 @@
                     var storeProject = _db.createObjectStore("project", {keyPath: "_id", autoIncrement: true});
                 }
             }
-            return this;
         },
 
         /**
@@ -127,4 +125,4 @@
             };
         }
     };
-})();
+})($C);
