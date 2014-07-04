@@ -1,12 +1,19 @@
-(function(C){
+(function(C, util){
     "use strict";
     if (C['ProjectControl']) return;
+    /**
+     * 项目控制器
+     */
     function ProjectControl() {
-
+    	// 验证URL
+    	if(!util.checkView(this)) {
+    		throw new Error("Load ProjectControl not allowed.");
+    	}
     }
 
     ProjectControl.prototype = {
         constructor: ProjectControl,
+        name:'project',
         /**
          * 获取一条记录
          * @param projectId 项目ID
@@ -27,5 +34,7 @@
             html += '<td><a href="#">Edit</a><a href="#">Debug</a><a href="#">Delete</a> ;';
             return html;
         }
-    }
-}(API.Control));
+    };
+
+    Object.defineProperty(C, 'ProjectControl', {value:new ProjectControl});
+}(L5.Controls, L5.util));

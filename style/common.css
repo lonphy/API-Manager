@@ -1,6 +1,6 @@
 @charset "utf-8";
 /* import font file */
-@font-face { font-family: alice;src: url('Alice.ttf')}
+@font-face { font-family: alice;src: url('Alice.ttf');}
 
 * {margin:0;padding:0;outline:none;}
 html,body{width:100%;height:100%;}
@@ -9,7 +9,7 @@ body{
 	padding:1px;
 	box-sizing: border-box;
 	background:url(../images/bg.gif) repeat;
-    color:#444;
+	color:#444;
 }
 body>section {
 	width:calc(100% - 80px);
@@ -21,7 +21,8 @@ body>section {
 	min-height:100%;
 	box-sizing: border-box;
 }
-
+a {color:#333;text-decoration: none;}
+a:hover {color:rgb(207, 59, 22);text-decoration: underline;}
 #nav {
 	position:fixed;
 	padding:0 5%;
@@ -43,14 +44,18 @@ body>section {
 	margin-left:3px;
 	font-size:14px;
 	font-weight:900;
-	background:#383838;
+	background-image: -webkit-radial-gradient(left top,rgb(65, 63, 65),rgb(39, 39, 39));
+	border:solid 1px rgb(39, 39, 39);
+	text-shadow:1px 1px 0 #000;
 	position:relative;
 	top:0;
 	transition: all linear .1s;
+	box-shadow:-1px -1px 0 rgb(39, 39, 39);
 }
 #nav a:hover, #nav a.on{
 	top:-5px;
-	background-color:rgb(212, 93, 26)
+	background-image: -webkit-radial-gradient(left top,rgba(0, 0, 0, 0.83),rgb(207, 59, 22));
+	border-color:rgba(0, 0, 0, 0.5);
 }
 
 #home-page h1 {
@@ -66,8 +71,30 @@ body>section {
 
 /*--------------------------- project -------------------------------- */
 #project {
-	padding-top:100px;
+	padding:100px 20px 20px 20px;
+	display:flex;
 }
 #project ~#nav {
 	top: 20px;
+}
+#sidebar {
+	width:200px;
+	border-top:solid 1px #666;
+}
+#sidebar dt {
+	height:26px;
+	font-weight:700;
+	line-height: 28px;
+}
+#sidebar dd {
+	text-indent:.5em;
+	height:20px;
+	line-height: 20px;
+}
+#sidebar dd:before {
+	content:">";
+	margin-right:3px;
+}
+#content {
+	-webkit-flex:1;
 }
