@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+    <style>
+        * {margin:0;padding: 0;outline: none;}
+        html,body{
+            width: 100%;
+            height: 100%;
+        }
+        body {
+            color:#424242;
+            font:14px/1.5 Helvetica,arial,"Microsoft Yahei";
+            background: url(images/16.jpg) repeat 0 0;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+        }
+        header {
+            height: 100px;
+            box-shadow: 0 18px 52px 20px #929292;
+            padding: 1px;
+            border-bottom: dotted 4px #CACACA;
+        }
+        h1 {text-align: left;margin:20px 0 0 60px;}
+        .button, .button:visited{
+            font-weight: bold;
+            line-height: 1;
+            background-image: linear-gradient(to bottom, rgba(0,0,0,.1), rgba(0,0,0,.2));
+            display: inline-block;
+            padding: 8px 14px 9px;
+            color: #fff;
+            text-decoration: none;
+            border-radius: 5px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.4);
+            text-shadow: 0 -1px 1px rgba(0,0,0,0.25);
+            border: none;
+            border-bottom: 1px solid rgba(0,0,0,0.25);
+            position: relative;
+            cursor: pointer;
+        }
+        .button:active { top: 1px }
+
+        .button.blue, .button.blue:visited { background-color: #2981e4 }
+        .button.blue:hover { background-color: #2575cf }
+        .button.red, .button.red:visited {background-color: #e62727;}
+        .button.red:hover {background-color: #cf2525}
+
+        #banner {
+            flex:1;
+            width: 600px;
+            height: 400px;
+            margin: 0 auto;
+            position: relative;
+            -webkit-perspective: 600px;
+            -moz-perspective: 600px;
+            -ms-perspective: 600px;
+            perspective: 600px;
+        }
+        #banner span {
+            padding: 6px 12px;
+            position: absolute;
+            font-size: 28px;
+            font-weight: 900;
+            top: 50%;
+            left:50%;
+        }
+        #banner span:nth-child(1) {
+            -webkit-transform: translate3d(0px,-67px,152px) rotateZ(18deg);
+            color: rgba(252, 20, 0, 0.5);
+            text-shadow: 2px 2px 3px rgba(129, 0, 0, 0.5);
+        }
+
+        #banner span:nth-child(2) {
+            -webkit-transform: translate3d(-193px,51px,93px) rotateZ(13deg);
+            color: rgba(44, 136, 199, 0.5);
+            text-shadow: 2px 2px 3px rgba(61, 103, 141, 0.5);
+        }
+
+        #banner span:nth-child(3) {
+            -webkit-transform: translate3d(-24px,31px,168px) scaleX(.6) rotateY(-47deg);
+            color: rgb(172, 71, 90);
+            text-shadow: 2px 2px 3px rgba(170, 107, 107, 0.5);
+        }
+
+        #banner span:nth-child(4) {
+            -webkit-transform: translate3d(-150px,-78px,112px) rotateZ(-30deg);
+            color: rgba(95, 158, 160, 0.5);
+            text-shadow: 2px 2px 3px rgba(172, 172, 172, 0.5);
+        }
+
+        #banner span:nth-child(5) {
+            font-size: 48px;
+            -webkit-transform: translate3d(-78px,-52px,120px);
+            text-shadow: 2px 2px 4px #3A373A;
+        }
+
+        footer {
+            box-sizing: border-box;
+            height: 220px;
+            padding-top: 20px;
+            border-top: dotted 4px #CACACA;
+            box-shadow:  0 -16px 64px 20px #B6B6B6;
+        }
+        footer .button{margin-right: 30px; padding: 0;width:120px;height: 36px}
+    </style>
+</head>
+<body>
+    <header>
+        <h1>APIer</h1>
+        <h4>集API测试，API文档编写，API多种文档生成于一体的H5应用</h4>
+    </header>
+    <p id="banner">
+        <span>Api Test</span>
+        <span>Api Document</span>
+        <span>Api Debug</span>
+        <span>Api Update</span>
+        <span>APIer</span>
+    </p>
+    <footer>
+        <button class="button blue">安装到本地</button>
+        <button class="button red">在线运行</button>
+    </footer>
+</body>
+</html>
