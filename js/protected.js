@@ -27,13 +27,14 @@
          * @returns {boolean}
          */
         canInstall: function () {
-            var support = ['Storage', 'aWorker', 'SharedWorker', 'indexedDB', 'requestFileSystem'];
+            var support = ['Storage', 'Worker', 'SharedWorker', 'IDBFactory', 'requestFileSystem'];
             for (var i = 0, l = support.length; i < l; ++i) {
                 if (!L5.util.isNativeFun(window[support[i]])) {
-                    this._errorMsg = support[i] + "not support!";
+                    this._errorMsg = support[i] + " not support!";
                     return false;
                 }
             }
+
             return true;
         },
 
@@ -145,5 +146,12 @@
     // 如果没有安装，则跳到安装页
     !L5.Setting.get('installed', 'bool') && L5.util.goInstall();
 
+    document.querySelector('footer button.blue').addEventListener('click', function () {
+        //document.getElementById('install').classList.toggle('show');
+        document.getElementById('content').classList.toggle('install');
+        if (!L5.util.canInstall()) {
+            alert(L5.util.lastError());
+        }
+    }, false);
     window.L5 = L5;
 })();

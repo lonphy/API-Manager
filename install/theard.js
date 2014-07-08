@@ -1,17 +1,9 @@
 "use strict";
 
-/**
- * 处理私有前缀
- */
-(function (global) {
-    if ('importScripts' in global) {
-        global.requestFileSystemSync = global.requestFileSystemSync || global.webkitRequestFileSystemSync;
-        global.resolveLocalFileSystemURLSync = global.resolveLocalFileSystemURLSync || global.webkitResolveLocalFileSystemURLSync;
-    } else {
-        global.requestFileSystem = global.requestFileSystem || global.webkitRequestFileSystem;
-        global.resolveLocalFileSystemURL = global.resolveLocalFileSystemURL || global.webkitResolveLocalFileSystemURL;
-    }
-})(self);
+if (!'importScripts' in self) {
+    throw new Error('can\'t run in window mode');
+}
+importScripts('lib/Html5-api-fix.js');
 
 
 /**
@@ -87,19 +79,13 @@
         }
     };
 })(self);
-
-console.log('------------------------------------------------------------');
-console.log("FileSystem Name is:",fs_.name);
-console.log("root Path is:", fs_.root.fullPath);
-console.log("vister url is:", fs_.root.toURL());
-console.log('------------------------------------------------------------');
-
 /**
  * 查询文件系统使用情况
  * 100M永久空间
- */
-navigator.webkitPersistentStorage.queryUsageAndQuota(function(used, total){
+
+ navigator.webkitPersistentStorage.queryUsageAndQuota(function(used, total){
     console.log("已使用空间：",used, "总计：",total);
 },function(e){
     console.error(e);
 });
+ */

@@ -24,6 +24,9 @@ header {
     box-shadow: 0 18px 52px 20px #929292;
     padding: 1px;
     border-bottom: dotted 4px #CACACA;
+    background: url(images/16.jpg) repeat 0 0;
+    position: relative;
+    z-index: 100;
 }
 
 h1 {
@@ -68,19 +71,28 @@ h1 {
     background-color: #cf2525
 }
 
-#banner {
+#content {
     flex: 1;
-    width: 600px;
-    height: 400px;
-    margin: 0 auto;
+    width: 100%;
+    height: auto;
     position: relative;
-    -webkit-perspective: 600px;
-    -moz-perspective: 600px;
-    -ms-perspective: 600px;
-    perspective: 600px;
 }
 
-#banner span {
+#logo, #view {
+    width: 600px;
+    height: 100%;
+    top: 0;
+    left: calc(50% - 300px);
+    position: absolute;
+    -webkit-perspective: 600px;
+    -webkit-backface-visibility: hidden;
+    background: url(images/16.jpg) repeat 0 0;
+    border: solid transparent;
+    border-width: 0 1px;
+    transition: border-color ease-in .2s, -webkit-transform ease-out .6s .2s;
+}
+
+#logo span {
     padding: 6px 12px;
     position: absolute;
     font-size: 28px;
@@ -89,34 +101,50 @@ h1 {
     left: 50%;
 }
 
-#banner span:nth-child(1) {
+#logo span:nth-child(1) {
     -webkit-transform: translate3d(0px, -67px, 152px) rotateZ(18deg);
     color: rgba(252, 20, 0, 0.5);
     text-shadow: 2px 2px 3px rgba(129, 0, 0, 0.5);
 }
 
-#banner span:nth-child(2) {
+#logo span:nth-child(2) {
     -webkit-transform: translate3d(-193px, 51px, 93px) rotateZ(13deg);
     color: rgba(44, 136, 199, 0.5);
     text-shadow: 2px 2px 3px rgba(61, 103, 141, 0.5);
 }
 
-#banner span:nth-child(3) {
+#logo span:nth-child(3) {
     -webkit-transform: translate3d(-24px, 31px, 168px) scaleX(.6) rotateY(-47deg);
     color: rgb(172, 71, 90);
     text-shadow: 2px 2px 3px rgba(170, 107, 107, 0.5);
 }
 
-#banner span:nth-child(4) {
+#logo span:nth-child(4) {
     -webkit-transform: translate3d(-150px, -78px, 112px) rotateZ(-30deg);
     color: rgba(95, 158, 160, 0.5);
     text-shadow: 2px 2px 3px rgba(172, 172, 172, 0.5);
 }
 
-#banner span:nth-child(5) {
+#logo span:nth-child(5) {
     font-size: 48px;
     -webkit-transform: translate3d(-78px, -52px, 120px);
     text-shadow: 2px 2px 4px #3A373A;
+}
+
+#view {
+    background: rgba(20, 80, 150, 1);
+    border-color: #333;
+    -webkit-transform: rotateY(540deg);
+}
+
+#content.install #logo {
+    border-color: #333;
+    -webkit-transform: rotateY(540deg);
+}
+
+#content.install #view {
+    border-color: transparent;
+    -webkit-transform: rotateY(0deg);
 }
 
 footer {
@@ -125,6 +153,8 @@ footer {
     padding-top: 20px;
     border-top: dotted 4px #CACACA;
     box-shadow: 0 -16px 64px 20px #B6B6B6;
+    position: relative;
+    z-index: 100;
 }
 
 footer .button {
@@ -132,4 +162,62 @@ footer .button {
     padding: 0;
     width: 120px;
     height: 36px
+}
+
+@keyframes install_dialog {
+    from {
+        top: -194px
+    }
+    to {
+        top: 106px;
+    }
+}
+
+@-webkit-keyframes install_dialog /* Safari 和 Chrome */
+{
+    0% {
+        -webkit-transform: translateY(-600px)
+    }
+    60% {
+        opacity: 1;
+        -webkit-transform: translateY(120px)
+    }
+    80% {
+        opacity: 1;
+        -webkit-transform: translateY(94px)
+    }
+    94% {
+        opacity: 1;
+        -webkit-transform: translateY(110px)
+    }
+    96% {
+        opacity: 1;
+        -webkit-transform: translateY(102px)
+    }
+    100% {
+        opacity: 1;
+        -webkit-transform: translateY(106px);
+        z-index: 50
+    }
+}
+
+#install {
+    position: absolute;
+    border-radius: 5px;
+    box-shadow: 2px 2px 16px 8px rgba(0, 0, 0, 0.2);
+    width: 480px;
+    height: 300px;
+    background: #fff;
+    left: calc(50% - 240px);
+    top: 0;
+    opacity: 0;
+}
+
+#install.show {
+    -webkit-animation-name: install_dialog;
+    -webkit-animation-duration: .6s;
+    -webkit-animation-delay: .2s;
+    -webkit-animation-timing-function: ease-in;
+    -webkit-animation-fill-mode: both;
+    top: 60px;
 }
