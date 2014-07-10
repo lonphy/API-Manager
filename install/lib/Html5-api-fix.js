@@ -12,4 +12,61 @@
         global.requestFileSystem = global.requestFileSystem || global.webkitRequestFileSystem;
         global.resolveLocalFileSystemURL = global.resolveLocalFileSystemURL || global.webkitResolveLocalFileSystemURL;
     }
+
+
+    /**
+     * 定义对话框元素
+     */
+    var DialogPrototype = Object.create(HTMLElement.prototype);
+    DialogPrototype.open = function () {
+
+    };
+    DialogPrototype.close = function () {
+        this.style.display = 'none';
+    }
+    DialogPrototype.type = "normal";
+
+    document.registerElement('api-dialog', {
+        prototype: Object.create(HTMLElement.prototype, {
+            open: {
+                value: function () {
+                    this.style.display = 'block';
+                }
+            },
+            close: {
+                value: function () {
+                    this.style.display = 'none';
+                }
+            },
+            type: {
+                get: function () {
+                    return this.attributes['type'].value || "normal";
+                }
+            },
+            createdCallback: {
+                value: function () {
+                    var tpls = document.getElementById('dialogTpl').import;
+                    console.log(tpls);
+                    var tpl = tpls.getElementById(this.type.toLowerCase());
+                    var clone = document.importNode(tpl.content, true);
+                    this.createShadowRoot().appendChild(clone);
+                }
+            },
+            attachedCallback: {
+                value: function () {
+                    console.log('insert');
+                }
+            },
+            detachedCallback: {
+                value: function () {
+                    console.log('delete');
+                }
+            },
+            attributeChangedCallback: {
+                value: function (attrName, oldVal, newVal) {
+                    console.log(attrName + ' changed from ' + oldVal + ' to ' + newVal);
+                }
+            }
+        })
+    });
 })(this);

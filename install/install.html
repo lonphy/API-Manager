@@ -4,11 +4,12 @@
 <link rel="stylesheet" href="install.css">
 <script src="lib/Html5-api-fix.js"></script>
 <script src="/js/protected.js"></script>
+<link rel="import" id="dialogTpl" href="/tpl/dialog.html">
 <header>
     <h1>APIer</h1>
     <h4>集API测试，API文档编写，API多种文档生成于一体的H5应用</h4>
 </header>
-<section id="dialog"><p></p></section>
+<section id="dialog"></section>
 <div id="content">
     <div id="logo">
         <span>Api Test</span>
@@ -19,7 +20,7 @@
     </div>
     <div id="view">
         <progress value=100></progress>
-        <p></p>
+        <p>正在检查环境支持</p>
     </div>
 </div>
 <footer>
@@ -30,3 +31,4 @@
 <script>
 SETUP.run();
 </script>
+<api-dialog type="error"></api-dialog>

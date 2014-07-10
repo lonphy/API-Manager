@@ -87,12 +87,15 @@
 	
 	function Dialog(id) {
 		if(!(Dialog.instance instanceof Dialog)) {
-			this.dom = document.getElementById(id);
+            this.dom = document.getElementById(id);
+            this.shadow = this.dom.webkitCreateShadowRoot();
+            var template = document.getElementById('dialogTpl').import.getElementById('dialogErrorTpl');
+            this.shadow.appendChild(template.content);
+            template.remove();
 			this.title = '';
 			this._msg = '';
 			this.type = '';
 			this.isShow = false;
-			this.isDerty = false;
 		}
 		return Dialog.instance;
 	}
@@ -100,19 +103,17 @@
 	Dialog.prototype = {
 		constructor: Dialog,
 		setMsg: function(msg) {
-			this._msg = msg || '';
+            this.shadow.textContent = msg || '';
 			return this;
 		},
 		
 		show: function() {
-			this.isDerty && (this.dom.children('p').innerText = this._msg);
 			!this.isShow && this.dom.classList.add('show');
 			this.isShow = true;
 		},
 		
 		close: function() {
-			this.dom.children('p').innerText = '';
-			this.isDerty = false;
+            this.shadow.textContent = '';
 			this.isShow && this.dom.classList.remove('show');
 			this.isShow = false;
 		}
