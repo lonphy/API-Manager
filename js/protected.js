@@ -146,12 +146,5 @@
     // 如果没有安装，则跳到安装页
     !L5.Setting.get('installed', 'bool') && L5.util.goInstall();
 
-    document.querySelector('footer button.blue').addEventListener('click', function () {
-        //document.getElementById('install').classList.toggle('show');
-        document.getElementById('content').classList.toggle('install');
-        if (!L5.util.canInstall()) {
-            alert(L5.util.lastError());
-        }
-    }, false);
     window.L5 = L5;
 })();
