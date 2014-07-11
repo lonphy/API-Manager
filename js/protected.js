@@ -145,6 +145,24 @@
 
     // 如果没有安装，则跳到安装页
     !L5.Setting.get('installed', 'bool') && L5.util.goInstall();
-
+    
+    /**
+     * 全局对话框类
+     */
+    L5.Dialog = (function(){
+    	var instance={};
+    	
+    	return {
+    		show: function(msg, type) {
+    			if(!instance[type]) {
+    				instance[type] = document.createElement('api-dialog');
+    				instance[type].setAttribute('type', type);
+    				document.body.appendChild(instance[type]);
+    			}
+    			instance[type].textContent = msg || '';
+    			instance[type].open();
+    		}
+    	};
+    })();
     window.L5 = L5;
 })();

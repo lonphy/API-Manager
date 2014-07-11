@@ -40,6 +40,7 @@
 				handle_dom['window'].classList.add('install');
 				if(!L5.util.canInstall()) {
 					this.error(L5.util.lastError());
+					state_ -=1;
 				}else{
 					handle_dom['local_install'].disabled = false;
 				}
@@ -76,47 +77,13 @@
 			this._next();
 		},
 		error: function(msg) {
-			(new Dialog('dialog')).setMsg(msg).show();
+			global.L5.Dialog.show(msg, 'error');
 		}
 	};
 	
 	var PROC_CHECK_EVN = function() {
 
 	};
-	
-	
-	function Dialog(id) {
-		if(!(Dialog.instance instanceof Dialog)) {
-            this.dom = document.getElementById(id);
-            this.shadow = this.dom.webkitCreateShadowRoot();
-            var template = document.getElementById('dialogTpl').import.getElementById('dialogErrorTpl');
-            this.shadow.appendChild(template.content);
-            template.remove();
-			this.title = '';
-			this._msg = '';
-			this.type = '';
-			this.isShow = false;
-		}
-		return Dialog.instance;
-	}
-	
-	Dialog.prototype = {
-		constructor: Dialog,
-		setMsg: function(msg) {
-            this.shadow.textContent = msg || '';
-			return this;
-		},
-		
-		show: function() {
-			!this.isShow && this.dom.classList.add('show');
-			this.isShow = true;
-		},
-		
-		close: function() {
-            this.shadow.textContent = '';
-			this.isShow && this.dom.classList.remove('show');
-			this.isShow = false;
-		}
-	};
+
     global.SETUP = SETUP;
 })(window);

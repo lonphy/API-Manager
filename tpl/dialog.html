@@ -1,5 +1,112 @@
+<template id="normal">
+    <style>
+		@-webkit-keyframes dialog /* Safari 和 Chrome */
+		{
+		    0% {
+		        -webkit-transform: translateY(-600px)
+		    }
+		    60% {
+		        opacity: 1;
+		        -webkit-transform: translateY(120px)
+		    }
+		    80% {
+		        opacity: 1;
+		        -webkit-transform: translateY(94px)
+		    }
+		    94% {
+		        opacity: 1;
+		        -webkit-transform: translateY(110px)
+		    }
+		    96% {
+		        opacity: 1;
+		        -webkit-transform: translateY(102px)
+		    }
+		    100% {
+		        opacity: 1;
+		        -webkit-transform: translateY(106px);
+		        z-index: 50
+		    }
+		}
+		:host {
+		    position: absolute;
+		    border-radius: 5px;
+		    box-shadow: 2px 2px 16px 8px rgba(0, 0, 0, 0.2);
+		    width: 480px;
+		    height: 300px;
+		    background: #fff;
+		    left: calc(50% - 240px);
+		    top: 0;
+		    opacity: 0;
+		}
+		:host(.show:host) {
+		    -webkit-animation-name: dialog;
+		    -webkit-animation-duration: .6s;
+		    -webkit-animation-delay: .2s;
+		    -webkit-animation-timing-function: ease-in;
+		    -webkit-animation-fill-mode: both;
+		    top: 60px;
+		}
+        h4 {
+        }
+
+        .msg {
+            font: 13px/1.2 normal Segoe UI, Verdana, sans-serif;
+        }
+    </style>
+    <h4></h4>
+
+    <div class="msg">
+        <content></content>
+    </div>
+</template>
 <template id="error">
     <style>
+		@-webkit-keyframes dialog /* Safari 和 Chrome */
+		{
+		    0% {
+		        -webkit-transform: translateY(-600px)
+		    }
+		    60% {
+		        opacity: 1;
+		        -webkit-transform: translateY(120px)
+		    }
+		    80% {
+		        opacity: 1;
+		        -webkit-transform: translateY(94px)
+		    }
+		    94% {
+		        opacity: 1;
+		        -webkit-transform: translateY(110px)
+		    }
+		    96% {
+		        opacity: 1;
+		        -webkit-transform: translateY(102px)
+		    }
+		    100% {
+		        opacity: 1;
+		        -webkit-transform: translateY(106px);
+		        z-index: 50
+		    }
+		}
+		:host {
+		    position: absolute;
+		    border-radius: 5px;
+		    box-shadow: 2px 2px 16px 8px rgba(0, 0, 0, 0.2);
+		    width: 480px;
+		    height: 300px;
+		    background: #fff;
+		    left: calc(50% - 240px);
+		    top: 0;
+		    opacity: 0;
+		}
+		:host.show {
+		    -webkit-animation-name: dialog;
+		    -webkit-animation-duration: .6s;
+		    -webkit-animation-delay: .2s;
+		    -webkit-animation-timing-function: ease-in;
+		    -webkit-animation-fill-mode: both;
+		    top: 60px;
+		}
         h4 {
         }
 

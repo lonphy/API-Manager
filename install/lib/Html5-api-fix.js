@@ -30,17 +30,20 @@
         prototype: Object.create(HTMLElement.prototype, {
             open: {
                 value: function () {
-                    this.style.display = 'block';
+                    this.classList.add('show');
                 }
             },
             close: {
                 value: function () {
-                    this.style.display = 'none';
+                	this.classList.remove('show');
                 }
             },
             type: {
                 get: function () {
-                    return this.attributes['type'].value || "normal";
+                	if (this.attributes['type']) {
+                		return this.attributes['type'].value;
+                	}
+                    return "normal";
                 }
             },
             createdCallback: {
