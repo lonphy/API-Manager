@@ -1,15 +1,35 @@
 <!DOCTYPE html>
 <head lang="en">
     <meta charset="UTF-8">
-    <script src="lib/Html5-api-fix.js"></script>
+    <script src="lib/inflate.js"></script>
 </head>
 <script>
-
-    var thread_fs;
+    /*
+     var thread_fs;
     navigator.webkitPersistentStorage.requestQuota(100 * 1024 * 1024, function (grantedBytes) {
         thread_fs = new Worker('fs.js');
     }, function (e) {
         console.log('Error', e);
     });
+     */
+</script>
 
+<input type="file" id="file">
+<script>
+    var file;
+    document.getElementById('file').addEventListener('change', function () {
+        file = this.files[0];
+        execc();
+    }, false);
+
+    function execc() {
+        var reader = new FileReader();
+        reader.readAsBinaryString(file);
+        reader.onload = function (e) {
+            var zip = new JSUnzip(reader.result);
+            zip.readEntries();
+            file = zip.entries;
+            zip = null;
+        };
+    }
 </script>

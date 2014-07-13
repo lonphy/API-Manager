@@ -1,0 +1,13 @@
+<component name="libraryTable">
+  <library name="HTML5" type="javaScript">
+    <properties>
+      <sourceFilesUrls>
+        <item url="file://G:/program/html5" />
+      </sourceFilesUrls>
+    </properties>
+    <CLASSES>
+      <root url="file://G:/program/html5" />
+    </CLASSES>
+    <SOURCES />
+  </library>
+</component>

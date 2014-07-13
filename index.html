@@ -1,11 +1,34 @@
-<!doctype html>
-<meta charset="utf-8">
-<title>API Manager</title>
-<link rel="import" href="tpl/nav.html" id="tpl-nav">
-<link rel="stylesheet" href="style/common.css">
-<script src="js/protected.js"></script>
-<script src="js/support.js" async></script>
-<script src="js/control/projectControl.js" async></script>
-<section id="home-page">
-	<h1>API Manager</h1>
-</section>
+<script>
+
+    if (!Storage in window) {
+        console.log(" 抱歉， 您的浏览器不支持HTML5本地存储");
+    }
+
+    if (!Worker in window) {
+        console.log(" 抱歉， 您的浏览器不支持HTML5工作线程");
+    }
+
+    if (!SharedWorker in window) {
+        console.log(" 抱歉， 您的浏览器不支持HTML5共享工作线程");
+    }
+
+    if (!IDBFactory in window) {
+        console.log(" 抱歉， 您的浏览器不支持HTML5 indexedDB数据库");
+    }
+
+    window.requestFileSystem = window.requestFileSystem || window.webkitRequestFileSystem;
+    if (!requestFileSystem) {
+        console.log(" 抱歉， 您的浏览器不支持HTML5 文件系统");
+    }
+
+    if (!'import' in document.createElement('link')) {
+        console.log(" 抱歉， 您的浏览器不支持HTML5 导入");
+    }
+
+    if (typeof document.registerElement != 'function') {
+        console.log(" 抱歉，您的浏览器不支持注册自定义元素注册");
+    }
+
+    var isInstall = !!localStorage['installed'];
+    location.replace(isInstall ? 'app.html' : 'install/install.html');
+</script>
