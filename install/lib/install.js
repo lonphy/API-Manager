@@ -10,7 +10,7 @@
     var INSTALL_STATE = {
         NOT_RUN: 0x0,	                              // 未开始
         LOAD_RES: 0x1,				              // 下载对应资源
-        WRITE_TO_FILESYSTEM: 0x2,				// 写入文件系统
+        UNZIP: 0x2,				                      // 解压资源
         MAP_PROC: 0x3,				              // 应用映射处理
         DONE: 0x4					                      // 已安装
     };
@@ -36,18 +36,10 @@
                 if (state_ == INSTALL_STATE.NOT_RUN) {
                     changeState(INSTALL_STATE.LOAD_RES);
                 }
-                else if (state_ == INSTALL_STATE.LOAD_RES) {
-                    changeState(INSTALL_STATE.WRITE_TO_FILESYSTEM);
-                }
-                else if (state_ == INSTALL_STATE.WRITE_TO_FILESYSTEM) {
-                    changeState(INSTALL_STATE.MAP_PROC);
-                }
-                else {
-                    changeState(INSTALL_STATE.DONE);
-                }
             }
         }, false);
         handle_dom['progress'] = document.querySelector('#view progress');
+        handle_dom['msg'] = document.querySelector('#view p');
     };
 
     var changeState = function (state) {
@@ -61,10 +53,12 @@
             case INSTALL_STATE.NOT_RUN:
                 break;
             case INSTALL_STATE.LOAD_RES:
+                handle_dom['local_install'].disabled = true;
                 handle_dom['window'].classList.add('install');
                 loadRes();
                 break;
-            case INSTALL_STATE.WRITE_TO_FILESYSTEM:
+            case INSTALL_STATE.UNZIP:
+                handle_dom['msg'].innerText = '开始解压。。';
                 install_run.postMessage({cmd: "unzip"});
                 break;
             case INSTALL_STATE.MAP_PROC:
@@ -83,11 +77,15 @@
      * 载入资源
      */
     var loadRes = function () {
-        install_run = new Worker('lib/download.js');
-        install_run.onmessage = message_proc;
-        asyncCall(function () {
-            install_run.postMessage({cmd: "init", file: "/install/apier.zip"});
-        }, 1000);
+        navigator.webkitPersistentStorage.requestQuota(100 * 1024 * 1024, function (grantedBytes) {
+            install_run = new Worker('lib/download.js');
+            install_run.onmessage = message_proc;
+            asyncCall(function () {
+                install_run.postMessage({cmd: "init", file: "/install/apier.zip"});
+            }, 1000);
+        }, function (e) {
+            console.log('Error', e);
+        });
     };
 
     var message_proc = function (e) {
@@ -98,7 +96,7 @@
                 handle_dom['progress'].value = data.loaded;
                 break;
             case 'load_done' :
-                changeState(INSTALL_STATE.WRITE_TO_FILESYSTEM);
+                changeState(INSTALL_STATE.UNZIP);
                 break;
             default:
                 console.log(data);

@@ -6,7 +6,7 @@
 if (!'importScripts' in self) {
     throw new Error('can\'t run in window mode');
 }
-
+importScripts('/lib/core/fs.js');
 importScripts('/install/lib/zip.js');
 
 
@@ -20,22 +20,7 @@ self.onmessage = function (e) {
             xhr_run(e.data.file);
             break;
         case 'unzip':
-            postMessage({
-                type: 'progress',
-                loaded: 0,
-                total: 100
-            });
-            var x = new JSUnzip(donwload_data);
-            x.readEntries();
-            donwload_data = x.entries;
-            x = null;
-            setTimeout(function () {
-                postMessage({
-                    type: 'progress',
-                    loaded: 100,
-                    total: 100
-                });
-            }, 3000);
+            do_zip(donwload_data);
             break;
         case 'save' :
             break;
@@ -76,4 +61,27 @@ function xhr_statechange(e) {
 function xhr_error(e) {
     console.log(e);
     return false;
+}
+
+/**
+ * 处理ZIP文件
+ * @param data
+ */
+function do_zip(data) {
+    fs.init();
+
+    var files = (new JSUnzip(data)).readEntries(),
+        i= 0,
+        file,
+        len = files.length;
+    for(;i<len;++i) {
+        file = files[i];
+        if (file.isdir) {
+            fs.mkdir(file.fileName);
+        }else {
+            fs.put(file);
+        }
+    }
+    donwload_data = x.entries;
+    postMessage(donwload_data);
 }

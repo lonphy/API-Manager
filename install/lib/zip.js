@@ -1,4 +1,4 @@
-(function (GLOBAL) {
+(function (GLOBAL,fs) {
 
     var zip_WSIZE = 32768;		// Sliding Window size
     var zip_STORED_BLOCK = 0;
@@ -731,44 +731,7 @@
 
         return out;
     };
-    /*
-     function write_inflated_internal(ws, buff) {
-     var bytesInflated = zip_inflate_internal(buff, 0, buff.length);
-     if (bytesInflated > 0) {
-     var out = "";
-     for(j = 0; j < bytesInflated; j++) {
-     out += String.fromCharCode(buff[j]);
-     }
-     ws.write(out);
-     }
-     return bytesInflated;
-     };
 
-     JSInflate.inflateStream = function(data, unzipFile, callback) {
-     var out, buff, bytesWritten;
-
-     zip_inflate_start();
-     zip_inflate_data = data;
-     zip_inflate_pos = 0;
-     bytesWritten = 0;
-
-     var ws = fs.createWriteStream(unzipFile);
-     buff = new Array(1024);
-     var bytesInflated = 0;
-
-     ws.on('drain', function() {
-     bytesInflated = write_inflated_internal(ws, buff);
-     if (bytesInflated > 0) {
-     bytesWritten += bytesInflated;
-     } else {
-     zip_inflate_data = null;
-     callback(bytesWritten);
-     }
-     });
-
-     bytesWritten += write_inflated_internal(ws, buff);
-     };
-     */
     var JSUnzip = function (fileContents) {
         this.fileContents = new JSUnzip.BigEndianBinaryStream(fileContents);
     }
@@ -786,6 +749,13 @@
             while (typeof(e.data) === "string") {
                 this.entries.push(e);
                 e = new JSUnzip.ZipEntry(this.fileContents);
+            }
+
+            var files = this.entries, i,l=files.length;
+            for(i= 0;i<l;++i) {
+                    if (files[i].compressionMethod === 8) { // deflate
+                        this.entries[i].data = inflate(files[i].data);
+                    }
             }
         },
 
@@ -825,11 +795,9 @@
         this.extraFieldLength = binaryStream.getNextBytesAsNumber(2);
 
         this.fileName = binaryStream.getNextBytesAsString(this.fileNameLength);
+        this.isdir = (this.fileName.slice(-1) === '/'); // if the file is directory
         this.extra = binaryStream.getNextBytesAsString(this.extraFieldLength);
         this.data = binaryStream.getNextBytesAsString(this.compressedSize);
-        if (this.compressionMethod === 8) {//deflate
-            this.data = inflate(this.data);
-        }
         if (this.isUsingBit3TrailingDataDescriptor()) {
             if (typeof(console) !== "undefined") {
                 console.log("File is using bit 3 trailing data descriptor. Not supported.");
@@ -910,4 +878,4 @@
             return result;
         }
     }
-}(this));
+}(this, this.fs));
