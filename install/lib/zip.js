@@ -1,59 +1,224 @@
-(function (GLOBAL,fs) {
+/**
+ * ZIP解压只存储的文件，使用deflate压缩的需要inflate插件
+ * @author lonphy
+ * @version 1.0
+ */
+(function(G){
+	"use strict";
+	
+	function ZIP(data) {
+		if ( ! (data instanceof ArrayBuffer) ) {
+			throw "invalid param for ZIP constructor, the param data must be ArrayBuffer";
+		}
+		this.reader = new ZIP.Reader(data);
+	}
+	
+	// zip flag
+	ZIP.MAGIC_NUM = 0x04034b50;
+	
+	G.ZIP = ZIP;
+	
+	ZIP.prototype = {
+			constroctor: ZIP,
+			getEntries: function() {
+				if (!this.isValid()) {
+					throw "Invalid zip file";
+				}
+				this.entries = [];
+				
+				var entry = new ZIP.Entry(this.reader);
+	            while (typeof(entry.data) === "string") {
+	                this.entries.push(entry);
+	                entry = new ZIP.Entry(this.reader);
+	            }
+				this.reader.free();	// GC
+			},
+			
+			/**
+			 * 获取下个节点
+			 * @return {ZIP.Entry}
+			 */
+			getNextEntry : function(){
+				return this.entries.shift() || null;
+			},
+			isValid: function() {
+				return this.reader.getUint32(0) === ZIP.MAGIC_NUM;
+			}
+	};
+	
+	ZIP.Entry = function(reader){
+		this.signature = reader.nextUint32();
+		// entry header signature
+		if (this.signature !== ZIP.MAGIC_NUM) return;
+		this.versionNeeded		= reader.nextUint16();
+		this.bitFlag 			= reader.nextUint16();
+		this.compressionMethod	= reader.nextUint16();
+		this.timeBlob			= reader.nextUint32();
+        if (this.isEncrypted()) {
+            throw "File contains encrypted entry. Not supported.";
+        }
 
-    var zip_WSIZE = 32768;		// Sliding Window size
-    var zip_STORED_BLOCK = 0;
-    var zip_STATIC_TREES = 1;
-    var zip_DYN_TREES = 2;
+        if (this.isUsingUtf8()) {
+            throw "File is using UTF8. Not supported.";
+        }
+        this.crc32				= reader.nextUint32();
+        this.compressedSize		= reader.nextUint32();
+        this.uncompressedSize	= reader.nextUint32();
+        if (this.isUsingZip64()) {
+            throw "File is using Zip64 (4gb+ file size). Not supported";
+        }
+        
+        this.fileNameLength		= reader.nextUint16();
+        this.extraFieldLength	= reader.nextUint16();
 
-    /* for inflate */
-    var zip_lbits = 9; 		// bits in base literal/length lookup table
-    var zip_dbits = 6; 		// bits in base distance lookup table
-    var zip_INBUFSIZ = 32768;	// Input buffer size
-    var zip_INBUF_EXTRA = 64;	// Extra buffer
+        this.fileName			= reader.nextAsString(this.fileNameLength);
+        this.isdir				= (this.fileName.slice(-1) === '/');
+        this.extra				= reader.nextAsString(this.extraFieldLength);
+		if (this.compressionMethod === 8) { // inflate data
+			this.data			= ZIP.plugin.inflate( reader.nextAsString(this.compressedSize) );
+		} else {
+			this.data			= reader.nextAsString(this.compressedSize);
+		}
+        
+        if (this.isUsingBit3TrailingDataDescriptor()) {
+        	console.log("File is using bit 3 trailing data descriptor. Not supported.");
+            reader.skip(16);
+        }
+	};
+	
+	ZIP.Entry.prototype = {
+			constructor: ZIP.Entry,
+			isEncrypted: function() {
+				 return (this.bitFlag & 0x01) === 0x01;
+			},
+			isUsingUtf8: function() {
+				return (this.bitFlag & 0x0800) === 0x0800;
+			},
+	        isUsingZip64: function () {
+	            this.compressedSize === 0xFFFFFFFF ||
+	                this.uncompressedSize === 0xFFFFFFFF;
+	        },
+	        isUsingBit3TrailingDataDescriptor: function () {
+	            return (this.bitFlag & 0x0008) === 0x0008;
+	        }
+	};
+	
+	ZIP.Reader = function(data){
+		this.content = new DataView(data);
+		
+		// 8bit offset = 1byte;
+		this.byteOffset = 0;
+	}
+	
+	ZIP.Reader.prototype = {
+			constructor: ZIP.Reader,
+			skip: function(step) {
+				this.byteOffset += step || 0;
+			},
+			nextUint32: function() {
+				var result = this.content.getUint32(this.byteOffset, true);
+				this.byteOffset += 4;
+				return result;
+			},
+			nextUint16: function() {
+				var result = this.content.getUint16(this.byteOffset, true);
+				this.byteOffset += 2;
+				return result;
+			},
+			nextUint8: function() {
+				var result = this.content.getUint8(this.byteOffset);
+				this.byteOffset += 1;
+				return result;
+			},
+			
+			nextAsString: function(length) {
+				var result = "",
+					i = this.byteOffset,
+					max = i+length;
+	            while ( i < max) {
+	                var char = this.getUint8(i);
+	                result += String.fromCharCode(char);
+	                // Accounting for multi-byte strings.
+	                max -= Math.floor(char / 0x100);
+	                i++;
+	            }
+	            
+	            this.byteOffset += length;
+	            return result;
+			},
+			getUint8: function(index) {
+				return this.content.getUint8(index || 0);
+			},
+			getUint32: function(index) {
+				return this.content.getUint32(index || 0, true);
+			},
+			free: function() {
+				delete this.content;
+			}
+	};
+	ZIP.plugin = {};
+}(this));
 
-    /* variables (inflate) */
-    var zip_slide;
-    var zip_wp;			// current position in slide
-    var zip_fixed_tl = null;	// inflate static
-    var zip_fixed_td;		// inflate static
-    var zip_fixed_bl, fixed_bd;	// inflate static
-    var zip_bit_buf;		// bit buffer
-    var zip_bit_len;		// bits in bit buffer
-    var zip_method;
-    var zip_eof;
-    var zip_copy_leng;
-    var zip_copy_dist;
-    var zip_tl, zip_td;	// literal/length and distance decoder tables
-    var zip_bl, zip_bd;	// number of bits decoded by tl and td
+/**********************************************
+ * inflate plugin for ZIP
+ **********************************************/
+(function(ZIP){
+	"use strict";
+	var zip_WSIZE = 0x8000,	// Sliding Window size
+		zip_STORED_BLOCK = 0,
+		zip_STATIC_TREES = 1,
+		zip_DYN_TREES = 2,
 
-    var zip_inflate_data;
-    var zip_inflate_pos;
+		/* for inflate */
+		zip_lbits = 9, 		// bits in base literal/length lookup table
+		zip_dbits = 6, 		// bits in base distance lookup table
+		zip_INBUFSIZ = 0x8000,	// Input buffer size
+		zip_INBUF_EXTRA = 0x40,	// Extra buffer
+
+		/* variables (inflate) */
+		zip_slide,
+		zip_wp,		// current position in slide
+		zip_fixed_tl = null,	// inflate static
+		zip_fixed_td,		// inflate static
+		zip_fixed_bl, fixed_bd,	// inflate static
+		zip_bit_buf,		// bit buffer
+		zip_bit_len,		// bits in bit buffer
+		zip_method,
+		zip_eof,
+		zip_copy_leng,
+		zip_copy_dist,
+		zip_tl, zip_td,	// literal/length and distance decoder tables
+		zip_bl, zip_bd,	// number of bits decoded by tl and td
+
+		zip_inflate_data,
+		zip_inflate_pos,
 
 
-    /* constant tables (inflate) */
-    var zip_MASK_BITS = [
-        0x0000,
-        0x0001, 0x0003, 0x0007, 0x000f, 0x001f, 0x003f, 0x007f, 0x00ff,
-        0x01ff, 0x03ff, 0x07ff, 0x0fff, 0x1fff, 0x3fff, 0x7fff, 0xffff];
-    // Tables for deflate from PKZIP's appnote.txt.
-    var zip_cplens = [ // Copy lengths for literal codes 257..285
-        3, 4, 5, 6, 7, 8, 9, 10, 11, 13, 15, 17, 19, 23, 27, 31,
-        35, 43, 51, 59, 67, 83, 99, 115, 131, 163, 195, 227, 258, 0, 0];
-    /* note: see note #13 above about the 258 in this list. */
-    var zip_cplext = [ // Extra bits for literal codes 257..285
-        0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 2, 2, 2, 2,
-        3, 3, 3, 3, 4, 4, 4, 4, 5, 5, 5, 5, 0, 99, 99]; // 99==invalid
-    var zip_cpdist = [ // Copy offsets for distance codes 0..29
-        1, 2, 3, 4, 5, 7, 9, 13, 17, 25, 33, 49, 65, 97, 129, 193,
-        257, 385, 513, 769, 1025, 1537, 2049, 3073, 4097, 6145,
-        8193, 12289, 16385, 24577];
-    var zip_cpdext = [ // Extra bits for distance codes
+		/* constant tables (inflate) */
+		zip_MASK_BITS = [
+			0x0000,
+			0x0001, 0x0003, 0x0007, 0x000f, 0x001f, 0x003f, 0x007f, 0x00ff,
+			0x01ff, 0x03ff, 0x07ff, 0x0fff, 0x1fff, 0x3fff, 0x7fff, 0xffff],
+		// Tables for deflate from PKZIP's appnote.txt.
+		zip_cplens = [ // Copy lengths for literal codes 257..285
+			3, 4, 5, 6, 7, 8, 9, 10, 11, 13, 15, 17, 19, 23, 27, 31,
+			35, 43, 51, 59, 67, 83, 99, 115, 131, 163, 195, 227, 258, 0, 0],
+		/* note: see note #13 above about the 258 in this list. */
+		zip_cplext = [ // Extra bits for literal codes 257..285
+			0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 2, 2, 2, 2,
+			3, 3, 3, 3, 4, 4, 4, 4, 5, 5, 5, 5, 0, 99, 99], // 99==invalid
+		zip_cpdist = [ // Copy offsets for distance codes 0..29
+			1, 2, 3, 4, 5, 7, 9, 13, 17, 25, 33, 49, 65, 97, 129, 193,
+			257, 385, 513, 769, 1025, 1537, 2049, 3073, 4097, 6145,
+			8193, 12289, 16385, 24577],
+		zip_cpdext = [ // Extra bits for distance codes
         0, 0, 0, 0, 1, 1, 2, 2, 3, 3, 4, 4, 5, 5, 6, 6,
         7, 7, 8, 8, 9, 9, 10, 10, 11, 11,
-        12, 12, 13, 13];
-    var zip_border = [  // Order of the bit length code lengths
+        12, 12, 13, 13],
+		zip_border = [  // Order of the bit length code lengths
         16, 17, 18, 0, 8, 7, 9, 6, 10, 5, 11, 4, 12, 3, 13, 2, 14, 1, 15];
-    /* objects (inflate) */
+    
+	/* objects (inflate) */
 
     function zip_HuftList() {
         this.next = null;
@@ -713,9 +878,8 @@
         return n;
     }
 
-    function inflate(data) {
-        var out, buff;
-        var i, j;
+    ZIP.plugin.inflate = function(data) {
+        var out, buff,i, j;
 
         zip_inflate_start();
         zip_inflate_data = data;
@@ -724,158 +888,11 @@
         buff = new Array(1024);
         out = "";
         while ((i = zip_inflate_internal(buff, 0, buff.length)) > 0) {
-            for (j = 0; j < i; j++)
+            for (j = 0; j < i; ++j)
                 out += String.fromCharCode(buff[j]);
         }
         zip_inflate_data = null; // G.C.
 
         return out;
     };
-
-    var JSUnzip = function (fileContents) {
-        this.fileContents = new JSUnzip.BigEndianBinaryStream(fileContents);
-    }
-    GLOBAL.JSUnzip = JSUnzip;
-    JSUnzip.MAGIC_NUMBER = 0x04034b50;
-
-    JSUnzip.prototype = {
-        readEntries: function () {
-            if (!this.isZipFile()) {
-                throw new Error("File is not a Zip file.");
-            }
-
-            this.entries = [];
-            var e = new JSUnzip.ZipEntry(this.fileContents);
-            while (typeof(e.data) === "string") {
-                this.entries.push(e);
-                e = new JSUnzip.ZipEntry(this.fileContents);
-            }
-
-            var files = this.entries, i,l=files.length;
-            for(i= 0;i<l;++i) {
-                    if (files[i].compressionMethod === 8) { // deflate
-                        this.entries[i].data = inflate(files[i].data);
-                    }
-            }
-        },
-
-        isZipFile: function () {
-            return this.fileContents.getByteRangeAsNumber(0, 4) === JSUnzip.MAGIC_NUMBER;
-        }
-    }
-
-    JSUnzip.ZipEntry = function (binaryStream) {
-        this.signature = binaryStream.getNextBytesAsNumber(4);
-        if (this.signature !== JSUnzip.MAGIC_NUMBER) {
-            return;
-        }
-
-        this.versionNeeded = binaryStream.getNextBytesAsNumber(2);
-        this.bitFlag = binaryStream.getNextBytesAsNumber(2);
-        this.compressionMethod = binaryStream.getNextBytesAsNumber(2);
-        this.timeBlob = binaryStream.getNextBytesAsNumber(4);
-
-        if (this.isEncrypted()) {
-            throw "File contains encrypted entry. Not supported.";
-        }
-
-        if (this.isUsingUtf8()) {
-            throw "File is using UTF8. Not supported.";
-        }
-
-        this.crc32 = binaryStream.getNextBytesAsNumber(4);
-        this.compressedSize = binaryStream.getNextBytesAsNumber(4);
-        this.uncompressedSize = binaryStream.getNextBytesAsNumber(4);
-
-        if (this.isUsingZip64()) {
-            throw "File is using Zip64 (4gb+ file size). Not supported";
-        }
-
-        this.fileNameLength = binaryStream.getNextBytesAsNumber(2);
-        this.extraFieldLength = binaryStream.getNextBytesAsNumber(2);
-
-        this.fileName = binaryStream.getNextBytesAsString(this.fileNameLength);
-        this.isdir = (this.fileName.slice(-1) === '/'); // if the file is directory
-        this.extra = binaryStream.getNextBytesAsString(this.extraFieldLength);
-        this.data = binaryStream.getNextBytesAsString(this.compressedSize);
-        if (this.isUsingBit3TrailingDataDescriptor()) {
-            if (typeof(console) !== "undefined") {
-                console.log("File is using bit 3 trailing data descriptor. Not supported.");
-            }
-            binaryStream.getNextBytesAsNumber(16);  //Skip the descriptor and move to beginning of next ZipEntry
-        }
-    }
-
-    JSUnzip.ZipEntry.prototype = {
-        isEncrypted: function () {
-            return (this.bitFlag & 0x01) === 0x01;
-        },
-
-        isUsingUtf8: function () {
-            return (this.bitFlag & 0x0800) === 0x0800;
-        },
-
-        isUsingBit3TrailingDataDescriptor: function () {
-            return (this.bitFlag & 0x0008) === 0x0008;
-        },
-
-        isUsingZip64: function () {
-            this.compressedSize === 0xFFFFFFFF ||
-                this.uncompressedSize === 0xFFFFFFFF;
-        }
-    }
-
-    JSUnzip.BigEndianBinaryStream = function (stream) {
-        this.stream = stream;
-        this.resetByteIndex();
-    }
-
-    JSUnzip.BigEndianBinaryStream.prototype = {
-        // The index of the current byte, used when we step through the byte
-        // with getNextBytesAs*.
-        resetByteIndex: function () {
-            this.currentByteIndex = 0;
-        },
-
-        getByteAt: function (index) {
-            return this.stream.charCodeAt(index);
-        },
-
-        getNextBytesAsNumber: function (steps) {
-            var res = this.getByteRangeAsNumber(this.currentByteIndex, steps);
-            this.currentByteIndex += steps;
-            return res;
-        },
-
-        getNextBytesAsString: function (steps) {
-            var res = this.getByteRangeAsString(this.currentByteIndex, steps);
-            this.currentByteIndex += steps;
-            return res;
-        },
-
-        // Big endian, so we're going backwards.
-        getByteRangeAsNumber: function (index, steps) {
-            var result = 0;
-            var i = index + steps - 1;
-            while (i >= index) {
-                result = (result << 8) + this.getByteAt(i);
-                i--;
-            }
-            return result;
-        },
-
-        getByteRangeAsString: function (index, steps) {
-            var result = "";
-            var max = index + steps;
-            var i = index;
-            while (i < max) {
-                var charCode = this.getByteAt(i);
-                result += String.fromCharCode(charCode);
-                // Accounting for multi-byte strings.
-                max -= Math.floor(charCode / 0x100);
-                i++;
-            }
-            return result;
-        }
-    }
-}(this, this.fs));
+})(this.ZIP);
