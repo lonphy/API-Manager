@@ -1,0 +1,23 @@
+<!doctype html>
+<meta charset="utf-8">
+<title>API Manager</title>
+<script src="lib/l5.js"></script>
+<script>
+    window.__config__ = {
+        moduleView: {
+            path: "/lib/ModuleView/",   // 视图模型路径
+            list: ["Home", "Project", "Types","Theme","Plugins","Debug","Help"]                  // 需要载入的模块
+        }
+    };
+    L5.go();
+</script>
+<link rel="import"  id="apier-nav" href="/tpl/nav.html">
+<link rel="import" id="l5-view" href="/tpl/view.html" >
+<link rel="import" id="l5-dialog" href="/tpl/dialog.html">
+<link rel="stylesheet" href="style/common.css">
+<section>
+    <div id="views">
+        <!-- home -->
+        <l5-view id="Home" class=""><h1>API Manager</h1></l5-view>
+    </div>
+</section>

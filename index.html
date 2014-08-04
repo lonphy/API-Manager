@@ -1,11 +1,23 @@
 <script>
 
-    if (!Storage in window) {
+    if (!"Storage" in window) {
         console.log(" 抱歉， 您的浏览器不支持HTML5本地存储");
     }
 
-    if (!Worker in window) {
+    if (!"Worker" in window) {
         console.log(" 抱歉， 您的浏览器不支持HTML5工作线程");
+    }
+
+    if (!"Proxy" in window) {
+        console.log("抱歉，您的浏览器不支持代理对象");
+    }
+
+    if (!"Map" in window) {
+        console.log("抱歉，您的浏览器不支持Map");
+    }
+
+    if (!"Promise" in window) {
+        console.log("抱歉，您的浏览器不支持Promise");
     }
 
     if (!SharedWorker in window) {
@@ -30,5 +42,5 @@
     }
 
     var isInstall = !!localStorage['installed'];
-    location.replace(isInstall ? 'app.html' : 'install/install.html');
+    //location.replace(isInstall ? 'apier.html' : 'install/install.html');
 </script>

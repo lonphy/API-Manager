@@ -58,7 +58,7 @@ a:hover {color:rgb(207, 59, 22);text-decoration: underline;}
 	border-color:rgba(0, 0, 0, 0.5);
 }
 
-#home-page h1 {
+#Home h1 {
 	position:absolute;
 	top:calc(50vh - 78px);
 	font-size:64px;
@@ -69,32 +69,22 @@ a:hover {color:rgb(207, 59, 22);text-decoration: underline;}
 	-webkit-mask-image: -webkit-gradient(linear, left top, left bottom, from(rgba(0,0,0,1)), to(rgba(0,0,0,0))); 
 }
 
-/*--------------------------- project -------------------------------- */
-#project {
-	padding:100px 20px 20px 20px;
-	display:flex;
+#views {
+    -webkit-perspective: 1200px;
+    height: calc(100% - 100px);
+    width: 100%;
+    position:absolute;
+    top:0;
 }
-#project ~#nav {
-	top: 20px;
-}
-#sidebar {
-	width:200px;
-	border-top:solid 1px #666;
-}
-#sidebar dt {
-	height:26px;
-	font-weight:700;
-	line-height: 28px;
-}
-#sidebar dd {
-	text-indent:.5em;
-	height:20px;
-	line-height: 20px;
-}
-#sidebar dd:before {
-	content:">";
-	margin-right:3px;
-}
-#content {
-	-webkit-flex:1;
+#views:after{
+    content: " ";
+    position: absolute;
+    width: 90%;
+    height: calc(100% - 80px);
+    background: #fff;
+    left: 5%;
+    top: 81px;
+    z-index: 1;
+    -webkit-transform: rotateX(-90deg);
+    -webkit-transform-origin:bottom;
 }

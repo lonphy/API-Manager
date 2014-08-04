@@ -1,0 +1,93 @@
+<!--**
+* 定义视图元素
+* @usage <l5-view></l5-view>
+* @author lonphy
+* @version 1.0
+*-->
+<script src="/lib/core/View.js" charset="UTF-8"></script>
+<script>
+    document.registerElement('l5-view', {
+        prototype: Object.create(HTMLElement.prototype, {
+            open: {
+                value: function () {
+                    this.classList.add('show');
+                }
+            },
+            close: {
+                value: function () {
+                    this.classList.remove('show');
+                }
+            },
+            createdCallback: {
+                value: function () {
+                    var tpls = document.getElementById('l5-view').import;
+                    var tpl = tpls.getElementById('template');
+                    var clone = document.importNode(tpl.content, true);
+                    this.createShadowRoot().appendChild(clone);
+                }
+            },
+            attachedCallback: {
+                value: function () {
+                    // TODO: 初始化视图
+                    var module = this.id;
+                    console.log(module);
+                }
+            },
+            detachedCallback: {
+                value: function () {
+                    console.log('delete');
+                }
+            },
+            attributeChangedCallback: {
+                value: function (attrName, oldVal, newVal) {
+                    console.log(attrName + ' changed from ' + oldVal + ' to ' + newVal);
+                }
+            }
+        })
+    });
+</script>
+<template id="template">
+    <style>
+        @-webkit-keyframes show /* Safari 和 Chrome */
+        {
+            100% {
+                opacity: 1;
+                z-index: 1;
+                -webkit-transform: rotateX(0deg);
+            }
+        }
+        @-webkit-keyframes hide /* Safari 和 Chrome */
+        {
+            100% {
+                opacity: .4;
+                -webkit-transform: rotateX(-90deg);
+                z-index: -1;
+            }
+        }
+
+        :host {
+            position: absolute;
+            width: 90%;
+            height: calc(100% - 80px);
+            background: #fff;
+            opacity: .5;
+            left: 5%;
+            top: 80px;
+            z-index: 0;
+            -webkit-transform: rotateX(90deg);
+            -webkit-transform-origin:bottom;
+            -webkit-transform-style: preserve-3d;
+            -webkit-backface-visibility: hidden;
+            -webkit-animation: hide .3s linear;
+        }
+
+        :host(.show:host) {
+            -webkit-animation: show ease-in both .6s .1s;
+            border-radius: 5px;
+            box-shadow: 2px 2px 16px 8px rgba(0, 0, 0, .2);
+        }
+        h4 {}
+    </style>
+    <h4></h4>
+    <content></content>
+</template>
