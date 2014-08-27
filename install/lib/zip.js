@@ -180,7 +180,7 @@
 		zip_wp,		// current position in slide
 		zip_fixed_tl = null,	// inflate static
 		zip_fixed_td,		// inflate static
-		zip_fixed_bl, fixed_bd,	// inflate static
+		zip_fixed_bl, zip_fixed_bd,	// inflate static
 		zip_bit_buf,		// bit buffer
 		zip_bit_len,		// bits in bit buffer
 		zip_method,
