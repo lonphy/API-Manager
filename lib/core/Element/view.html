@@ -109,7 +109,7 @@
             -webkit-animation: animate-progress 2s linear infinite;
         }
         #progress:before {
-            content: "请稍候..";
+            content: "wait please..";
             position: absolute;
             color: #473F3F;
             width: 100%;
@@ -125,11 +125,14 @@
             border-radius: 5px;
             box-shadow: 2px 2px 16px 8px rgba(0, 0, 0, .2);
         }
-        h4 {}
+        :host(:host) {
+            box-sizing: border-box;
+            padding: 1em !important;
+        }
     </style>
     <div id="mask">
         <div id="progress"></div>
     </div>
-    <h4></h4>
-    <content></content>
+    <content select='h2'></content>
+    <content select=":not(h2)"></content>
 </template>

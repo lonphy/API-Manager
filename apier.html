@@ -2,19 +2,24 @@
 <html lang="zh_cn">
 <meta charset="utf-8">
 <title>API Manager</title>
-<script src="lib/l5.js"></script>
+<script src="lib/core/l5.js"></script>
+<script src="lib/core/T.js"></script>
 <script>
     window.__config__ = {
         moduleView: {
             path: "/lib/ModuleView/",   // 视图模型路径
             list: ["Home", "Project", "Types","Theme","Plugins","Debug","Help"]                  // 需要载入的模块
+        },
+        tpl : {
+            path: '/lib/View/',
+            ext: '.tpl'
         }
     };
     L5.go();
 </script>
-<link rel="import"  id="apier-nav" href="/tpl/nav.html">
-<link rel="import" id="l5-view" href="/tpl/view.html" >
-<link rel="import" id="l5-dialog" href="/tpl/dialog.html">
+<link rel="import"  id="apier-nav" href="/lib/core/Element/nav.html">
+<link rel="import" id="l5-view" href="/lib/core/Element/view.html" >
+<link rel="import" id="l5-dialog" href="/lib/core/Element/dialog.html">
 <link rel="stylesheet" href="style/common.css">
 <section>
     <div id="views">

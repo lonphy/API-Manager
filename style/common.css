@@ -21,8 +21,9 @@ body>section {
 	min-height:100%;
 	box-sizing: border-box;
 }
+ul,li{list-style: none}
 a {color:#333;text-decoration: none;}
-a:hover {color:rgb(207, 59, 22);text-decoration: underline;}
+a:hover {color:rgb(207, 59, 22);}
 #nav {
 	position:fixed;
 	padding:0 5%;
@@ -88,3 +89,47 @@ a:hover {color:rgb(207, 59, 22);text-decoration: underline;}
     -webkit-transform: rotateX(-90deg);
     -webkit-transform-origin:bottom;
 }
+
+.title-button {
+    position: absolute;
+    right: 2em;
+    top: .2em;
+    color:#333;
+    padding: 0 1.6em;
+    text-align: center;
+    font-size: 13px;
+    background-image: -webkit-radial-gradient(left top,rgba(77, 140, 211, 0.83),rgb(39, 215, 208));
+    text-indent: 0;
+    border-radius: 1.8em .4em;
+    line-height: 2em;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.75);
+    text-decoration: none;
+    transition: all ease-in .3s;
+}
+.title-button:hover {border-radius: .4em 1.8em;box-shadow: 0 2px 5px rgba(0,0,0,.8);}
+
+
+
+#project-list .header{
+    background-color: #942929;
+    height: 2em;
+    line-height: 2em;
+    display: flex;
+    color: #fff;
+    border-radius: 3px;
+    font-weight: 900;
+    text-align: center;
+    margin-top: 1em;
+}
+
+#project-list .list-item{
+    height: 2.2em;
+    line-height: 2.2em;
+    display: flex;
+    text-align: left;
+    text-indent: .5em;
+}
+#project-list .list-item:nth-child(even) {background-color: #CACACA}
+#project-list .header li, #project-list .list-item li{flex:2}
+#project-list .header li:nth-child(1),#project-list .list-item li:nth-child(1){flex:1;text-align: center}
+#project-list .header li:nth-child(2),#project-list .list-item li:nth-child(2){flex:3}
