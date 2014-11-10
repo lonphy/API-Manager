@@ -1,8 +1,7 @@
-<link rel="stylesheet" href="style/project.css">
 <h2>New Project<a href="#Project.list" class="title-button">Go Back</a></h2>
 <form>
     <p><label>Name</label><input type="text" placeholder="APIs 's project name" maxlength="64"></p>
-    <p><label>API Base URL</label><input type="url" placeholder="API's base url" maxlength="128"></p>
+    <p><label>Base URL</label><input type="url" placeholder="API's base url" maxlength="128"></p>
     <p>
         <label>Need Login</label>
         <input type="radio" name="login" value="10">Yes

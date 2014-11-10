@@ -23,7 +23,23 @@ body>section {
 }
 ul,li{list-style: none}
 a {color:#333;text-decoration: none;}
-a:hover {color:rgb(207, 59, 22);}
+a:hover {color:rgb(207, 59, 22)}
+input,
+textarea {
+    border:solid 1px rgba(207, 59, 22, .5);
+    padding: 3px;
+    border-radius:3px;
+    transition:  box-shadow 0.30s ease-in-out
+}
+input[type=text],
+input[type=url],
+input[type=password] {
+    height: 1.4em;
+    line-height: 1.4em;
+}
+
+input:focus {border-color:rgba(207, 59, 22, .6);box-shadow: 0 0 5px rgba(207, 59, 22, 1)}
+
 #nav {
 	position:fixed;
 	padding:0 5%;
@@ -108,8 +124,8 @@ a:hover {color:rgb(207, 59, 22);}
 }
 .title-button:hover {border-radius: .4em 1.8em;box-shadow: 0 2px 5px rgba(0,0,0,.8);}
 
-
-
+/* ----------------- 项目管理列表 ------------------------*/
+h2 {border-bottom:solid 1px #3A373A;height: 2em;line-height: 2em;text-indent: 1em;position: relative}
 #project-list .header{
     background-color: #942929;
     height: 2em;
@@ -130,6 +146,12 @@ a:hover {color:rgb(207, 59, 22);}
     text-indent: .5em;
 }
 #project-list .list-item:nth-child(even) {background-color: #CACACA}
-#project-list .header li, #project-list .list-item li{flex:2}
+#project-list .header li,#project-list .list-item li{flex:2}
 #project-list .header li:nth-child(1),#project-list .list-item li:nth-child(1){flex:1;text-align: center}
 #project-list .header li:nth-child(2),#project-list .list-item li:nth-child(2){flex:3}
+
+/* ----------------- 项目管理-新增 ------------------------*/
+#project-add form {padding: 1em;}
+#project-add form p{height: 2em; line-height: 2em}
+#project-add form label {display: inline-block; width: 10em;text-align: right;margin-right: .5em}
+#project-add form label:after{content: ":"};
