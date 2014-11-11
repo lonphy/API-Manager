@@ -1,0 +1,17 @@
+
+<aside id="nav">
+	<a href="#Home" title="home">Home</a> <a href="#Project"
+		title="Manager Project">Project</a> <a href="#Types"
+		title="Manager Types">Types</a> <a href="#Debug" title="Debug Project">Debug</a>
+	<a href="#Theme" title="Theme Config">Theme</a> <a href="#Plugins"
+		title="Plugin Install/Uninstall">Plugin</a> <a href="#Help"
+		title="Help Documents">Helps</a>
+</aside>
+<script>
+    L5.ready(function() {
+        var nav = document.querySelector('#apier-nav').import;
+        var el = nav.getElementById('nav');
+        document.body.appendChild(el.cloneNode(true));
+       // nav.remove();
+    });
+</script>
