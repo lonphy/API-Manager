@@ -54,16 +54,46 @@ input,textarea {
 	border-radius: 3px;
 	transition: box-shadow 0.30s ease-in-out
 }
-
+textarea{resize: none}
 input[type=text],input[type=url],input[type=password] {
 	height: 1.4em;
 	line-height: 1.4em;
 }
-
-input:focus {
+input[type=radio] {
+    margin-right: 6px;
+}
+input:focus,textarea:focus {
 	border-color: rgba(207, 59, 22, .6);
 	box-shadow: 0 0 5px rgba(207, 59, 22, 1)
 }
+input.long {width: 30em}
+input.short {width: 10em}
+textarea.small {width: 30em; height: 10em}
+
+
+.title-button, .form-button {
+    cursor: pointer;
+    color: #333;
+    padding: 0 1.6em;
+    text-align: center;
+    font-size: 13px;
+    background-image: -webkit-radial-gradient(left top, rgba(77, 140, 211, 0.83),
+    rgb(39, 215, 208));
+    text-indent: 0;
+    border-radius: 1.8em .4em;
+    line-height: 2em;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.75);
+    text-decoration: none;
+    transition: all ease-in .3s;
+}
+
+.title-button:hover,
+.form-button:hover {
+    border-radius: .4em 1.8em;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, .8);
+}
+.title-button {position: absolute;right: 2em;top: .2em}
+.form-button {border:none}
 
 #nav {
 	position: fixed;
@@ -137,28 +167,6 @@ input:focus {
 	-webkit-transform-origin: bottom;
 }
 
-.title-button {
-	position: absolute;
-	right: 2em;
-	top: .2em;
-	color: #333;
-	padding: 0 1.6em;
-	text-align: center;
-	font-size: 13px;
-	background-image: -webkit-radial-gradient(left top, rgba(77, 140, 211, 0.83),
-		rgb(39, 215, 208));
-	text-indent: 0;
-	border-radius: 1.8em .4em;
-	line-height: 2em;
-	box-shadow: 0 1px 3px rgba(0, 0, 0, 0.75);
-	text-decoration: none;
-	transition: all ease-in .3s;
-}
-
-.title-button:hover {
-	border-radius: .4em 1.8em;
-	box-shadow: 0 2px 5px rgba(0, 0, 0, .8);
-}
 
 /* ----------------- 项目管理列表 ------------------------*/
 h2 {
@@ -209,23 +217,15 @@ h2 {
 }
 
 /* ----------------- 项目管理-新增 ------------------------*/
-#project-add form {
-	padding: 1em;
-}
-
-#project-add form p {
-	height: 2em;
-	line-height: 2em
-}
-
+#project-add form {padding: 1em}
+#project-add form p {height: 3em;line-height: 3em}
+#project-add form p:last-child {padding-left: 10.5em}
+#project-add form p.high {height: 11em}
 #project-add form label {
 	display: inline-block;
 	width: 10em;
 	text-align: right;
 	margin-right: .5em
 }
-
-#project-add form label:after {
-	content: ":"
-}
-;
+#project-add form label:after {content: ":"}
+#project-add form p span {margin-right: 1em}
