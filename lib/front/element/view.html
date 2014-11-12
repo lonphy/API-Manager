@@ -4,7 +4,6 @@
 * @author lonphy
 * @version 1.0
 *-->
-<script src="/lib/core/View.js" charset="UTF-8"></script>
 <script>
     document.registerElement('l5-view', {
         prototype: Object.create(HTMLElement.prototype, {
@@ -48,21 +47,19 @@
 </script>
 <template id="template">
 <style>
-@
--webkit-keyframes show /* Safari 和 Chrome */ { 100% {
-	opacity: 1;
-	z-index: 1;
-	-webkit-transform: rotateX(0deg);
+@-webkit-keyframes show /* Safari 和 Chrome */ {
+    100% {
+        opacity: 1;
+        z-index: 1;
+        -webkit-transform: rotateX(0deg);
+    }
 }
-
-}
-@
--webkit-keyframes hide /* Safari 和 Chrome */ { 100% {
-	opacity: .4;
-	-webkit-transform: rotateX(-90deg);
-	z-index: -1;
-}
-
+@-webkit-keyframes hide /* Safari 和 Chrome */ {
+    100% {
+        opacity: .4;
+        -webkit-transform: rotateX(-90deg);
+        z-index: -1;
+    }
 }
 :host {
 	position: absolute;
@@ -80,11 +77,8 @@
 	-webkit-animation: hide .3s linear;
 }
 
-@
--webkit-keyframes animate-progress { 100% {
-	background-position: 16em 0px;
-}
-
+@-webkit-keyframes animate-progress {
+    100% { background-position: 16em 0px;}
 }
 #mask {
 	position: absolute;
@@ -102,8 +96,7 @@
 	width: 30em;
 	height: 2.4em;
 	background-color: transparent;
-	background-image: -webkit-linear-gradient(-45deg, transparent 33%, rgb(80, 23, 9)
-		33%, rgb(207, 59, 22) 66%, transparent 66%),
+	background-image: -webkit-linear-gradient(-45deg, transparent 33%,rgb(80, 23, 9) 33%, rgb(207, 59, 22) 66%, transparent 66%),
 		-webkit-linear-gradient(top, rgba(255, 255, 255, .25),
 		rgba(0, 0, 0, .25));
 	background-size: 8em 2.4em, 100% 100%;
@@ -124,17 +117,17 @@
 	text-shadow: 0 0 2px #666, 0 0 .5em #fff;
 }
 
-:host (.loading ) #mask {
+:host(.loading) #mask {
 	display: block;
 }
 
-:host (.show:host ) {
+:host(.show:host) {
 	-webkit-animation: show ease-in both .6s .1s;
 	border-radius: 5px;
 	box-shadow: 2px 2px 16px 8px rgba(0, 0, 0, .2);
 }
 
-:host (:host ) {
+:host(:host) {
 	box-sizing: border-box;
 	padding: 1em !important;
 }

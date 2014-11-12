@@ -2,8 +2,15 @@
 <html lang="zh_cn">
 <meta charset="utf-8">
 <title>API Manager</title>
-<script src="lib/core/l5.js"></script>
-<script src="lib/core/T.js"></script>
+<script src="lib/front/l5.js"></script>
+<script src="lib/front/Ready.js"></script>
+<script src="lib/front/Setting.js"></script>
+<script src="lib/front/Thread.js"></script>
+<script src="lib/front/ViewManager.js"></script>
+<script src="lib/front/Template.js"></script>
+<script src="lib/front/Router.js"></script>
+<script src="lib/front/Controller.js"></script>
+
 <script>
     window.__config__ = {
     	controller: {
@@ -15,18 +22,13 @@
             ext: '.tpl'
         }
     };
-    L5.go();
+    L5.Run();
 </script>
-<link rel="import" id="apier-nav" href="/lib/core/element/nav.html">
-<link rel="import" id="l5-view" href="/lib/core/element/view.html">
-<link rel="import" id="l5-dialog" href="/lib/core/element/dialog.html">
+<link rel="import" id="apier-nav" href="/lib/front/element/nav.html">
+<link rel="import" id="l5-view" href="/lib/front/element/view.html">
+<link rel="import" id="l5-dialog" href="/lib/front/element/dialog.html">
 <link rel="stylesheet" href="style/common.css">
 <section>
-	<div id="views">
-		<!-- home -->
-		<l5-view id="Home" class="">
-		<h1>API Manager</h1>
-		</l5-view>
-	</div>
+	<div id="views"></div>
 </section>
 </html>
