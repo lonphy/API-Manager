@@ -28,260 +28,94 @@
             createdCallback: {
                 value: function () {
                     var tpls = document.getElementById('l5-dialog').import;
-                    var tpl = tpls.getElementById(this.type.toLowerCase());
+                    var tpl = tpls.getElementById('l5-dialog');
                     var clone = document.importNode(tpl.content, true);
                     this.createShadowRoot().appendChild(clone);
                 }
             },
             attachedCallback: {
-                value: function () {
-                    console.log('insert');
-                }
+                value: function () {/*console.log('insert');*/}
             },
             detachedCallback: {
-                value: function () {
-                    console.log('delete');
-                }
+                value: function () {/*console.log('delete');*/}
             },
             attributeChangedCallback: {
-                value: function (attrName, oldVal, newVal) {
-                    console.log(attrName + ' changed from ' + oldVal + ' to ' + newVal);
-                }
+                value: function (attrName, oldVal, newVal) { /*console.log(attrName + ' changed from ' + oldVal + ' to ' + newVal);*/}
             }
         })
     });
 </script>
-<template id="normal">
-<style>
-@
--webkit-keyframes dialog /* Safari 和 Chrome */ { 0% {
-	-webkit-transform: translateY(-600px)
-}
+<template id="l5-dialog">
+    <style>
+    @-webkit-keyframes dialog /* Safari 和 Chrome */ {
+        0%  {transform: translateY(-600px) }
+        60% { opacity:1; transform:translateY(120px) }
+        80% { opacity:1; transform:translateY(94px) }
+        94% { opacity:1; transform:translateY(110px) }
+        96% { opacity:1; transform:translateY(102px) }
+        100%{ opacity:1; transform:translateY(106px);z-index:50 }
+    }
+    :host {
+        position: absolute;
+        border-radius: 8px;
+        box-shadow: 2px 2px 16px 8px rgba(0, 0, 0, 0.2);
+        width: 420px;
+        height: 240px;
+        left: calc(50% - 210px);
+        top: 0;
+        opacity: 0;
+        background: #fff;
+        font: 13px/1.2 normal Segoe UI, Verdana, sans-serif;
+        display: flex;
+        flex-direction: column;
+    }
 
-60%
-{
-opacity
-:
- 
-1;
--webkit-transform
-:
- 
-translateY
-(120px)
+    :host(.dialog-show:host ) {
+        -webkit-animation: dialog .6s ease-in .2s both;
+        top: 60px;
+    }
 
-            
-}
-80%
-{
-opacity
-:
- 
-1;
--webkit-transform
-:
- 
-translateY
-(94px)
+    h4 {
+        width: 426px;
+        position: relative;
+        left: -3px;
+        margin: 0;
+        padding: 0;
+        height: 3em;
+        border-radius: 8px 8px 0 0;
+        box-shadow: 0 4px 5px rgba(0,0,0,.35);
+        background-image: -webkit-radial-gradient(left top, rgb(65, 63, 65),rgb(39, 39, 39));
+        color: #fff;
+        text-indent: 1em;
+        -webkit-user-select: none;
+        letter-spacing: 1px;
+        font: 16px/3em normal normal;
+        text-shadow: 2px 2px black;
+    }
 
-            
-}
-94%
-{
-opacity
-:
- 
-1;
--webkit-transform
-:
- 
-translateY
-(110px)
+    div.msg {padding: 1em;flex: 1}
+    div.action{height: 3em;line-height: 3em;text-align: center;}
+    button{
+        color: #fff;
+        padding: 0 1.6em;
+        font-size: 13px;
+        background-image: -webkit-radial-gradient(left top, #333,rgba(0, 0, 0, 0.75));
+        border-radius: 1.8em .4em;
+        line-height: 2em;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.75);
+        transition: all ease-in .2s;
+        -webkit-user-select:none;
+        border: none;
+        outline: none;
+    }
+    button:hover {border-radius: .4em 1.8em}
+    </style>
+    <h4>Message</h4>
 
-            
-}
-96%
-{
-opacity
-:
- 
-1;
--webkit-transform
-:
- 
-translateY
-(102px)
-
-            
-}
-100%
-{
-opacity
-:
- 
-1;
--webkit-transform
-:
- 
-translateY
-(106px);
-
-                
-z-index
-:
- 
-50
-}
-}
-:host {
-	position: absolute;
-	border-radius: 5px;
-	box-shadow: 2px 2px 16px 8px rgba(0, 0, 0, 0.2);
-	width: 480px;
-	height: 300px;
-	background: #fff;
-	left: calc(50% -   240px);
-	top: 0;
-	opacity: 0;
-}
-
-:host (.dialog-show:host ) {
-	-webkit-animation-name: dialog;
-	-webkit-animation-duration: .6s;
-	-webkit-animation-delay: .2s;
-	-webkit-animation-timing-function: ease-in;
-	-webkit-animation-fill-mode: both;
-	top: 60px;
-}
-
-h4 {
-	
-}
-
-.msg {
-	font: 13px/1.2 normal Segoe UI, Verdana, sans-serif;
-}
-</style>
-<h4></h4>
-
-<div class="msg">
-	<content></content>
-</div>
-</template>
-<template id="error">
-<style>
-@
--webkit-keyframes dialog /* Safari 和 Chrome */ { 0% {
-	-webkit-transform: translateY(-600px)
-}
-
-60%
-{
-opacity
-:
- 
-1;
--webkit-transform
-:
- 
-translateY
-(120px)
-
-            
-}
-80%
-{
-opacity
-:
- 
-1;
--webkit-transform
-:
- 
-translateY
-(94px)
-
-            
-}
-94%
-{
-opacity
-:
- 
-1;
--webkit-transform
-:
- 
-translateY
-(110px)
-
-            
-}
-96%
-{
-opacity
-:
- 
-1;
--webkit-transform
-:
- 
-translateY
-(102px)
-
-            
-}
-100%
-{
-opacity
-:
- 
-1;
--webkit-transform
-:
- 
-translateY
-(106px);
-
-                
-z-index
-:
- 
-50
-}
-}
-:host {
-	position: absolute;
-	border-radius: 5px;
-	box-shadow: 2px 2px 16px 8px rgba(0, 0, 0, 0.2);
-	width: 480px;
-	height: 300px;
-	background: #fff;
-	left: calc(50% -   240px);
-	top: 0;
-	opacity: 0;
-}
-
-:host (.dialog-show:host ) {
-	-webkit-animation-name: dialog;
-	-webkit-animation-duration: .6s;
-	-webkit-animation-delay: .2s;
-	-webkit-animation-timing-function: ease-in;
-	-webkit-animation-fill-mode: both;
-	top: 60px;
-}
-
-h4 {
-	
-}
-
-.msg {
-	font: 13px/1.2 normal Segoe UI, Verdana, sans-serif;
-}
-</style>
-<h4></h4>
-
-<div class="msg">
-	<content></content>
-</div>
+    <div class="msg">
+        <content></content>
+    </div>
+    <div class="action">
+        <button>OK</button>
+    </div>
 </template>

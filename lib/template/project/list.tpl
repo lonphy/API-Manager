@@ -11,13 +11,13 @@
 
 #{foreach list as idx => val}#
 <ul class="list-item">
-    <li>#{val['_id']}#</li>
+    <li>#{val['id']}#</li>
     <li>#{val['name']}#</li>
-    <li>#{val['date']}#</li>
-    <li>#{val['last_time']}#</li>
+    <li>#{val['_time']}#</li>
+    <li>#{val['_last_time']}#</li>
     <li>#{val['desc']}#</li>
-    <li>#{val['apis']}#</li>
-    <li><a href="#Project.detail?pid=#{val['_id']}#">Detail</a></li>
+    <li>#{val['api_number']}#</li>
+    <li><a href="#Project.detail?pid=#{val['id']}#">Detail</a></li>
 </ul>
 #{/foreach}#
 
