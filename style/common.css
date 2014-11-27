@@ -1,21 +1,8 @@
 @charset "utf-8";
 /* import font file */
-@font-face {
-	font-family: alice;
-	src: url('Alice.ttf');
-}
-
-* {
-	margin: 0;
-	padding: 0;
-	outline: none;
-}
-
-html,body {
-	width: 100%;
-	height: 100%;
-}
-
+@font-face {font-family: alice;src: url('Alice.ttf')}
+* {margin: 0;padding: 0;outline: none}
+html,body {width: 100%;height: 100%}
 body {
 	font: 13px/1.2 normal Segoe UI, Verdana, sans-serif;
 	padding: 1px;
@@ -23,7 +10,6 @@ body {
 	background: url(../images/bg.gif) repeat;
 	color: #444;
 }
-
 body>section {
 	width: calc(100% -   80px);
 	min-width: 600px;
@@ -34,20 +20,9 @@ body>section {
 	min-height: 100%;
 	box-sizing: border-box;
 }
-
-ul,li {
-	list-style: none
-}
-
-a {
-	color: #333;
-	text-decoration: none;
-}
-
-a:hover {
-	color: rgb(207, 59, 22)
-}
-
+ul,li {list-style: none}
+a {color: #333;text-decoration: none}
+a:hover {color: rgb(207, 59, 22)}
 input,textarea {
 	border: solid 1px rgba(207, 59, 22, .5);
 	padding: 3px;
@@ -55,17 +30,9 @@ input,textarea {
 	transition: box-shadow 0.30s ease-in-out
 }
 textarea{resize: none}
-input[type=text],input[type=url],input[type=password] {
-	height: 1.4em;
-	line-height: 1.4em;
-}
-input[type=radio] {
-    margin-right: 6px;
-}
-input:focus,textarea:focus {
-	border-color: rgba(207, 59, 22, .6);
-	box-shadow: 0 0 5px rgba(207, 59, 22, 1)
-}
+input[type=text],input[type=url],input[type=password] {height: 1.4em;line-height: 1.4em}
+input[type=radio] {margin-right: 6px}
+input:focus,textarea:focus {border-color: rgba(207, 59, 22, .6);box-shadow: 0 0 5px rgba(207, 59, 22, 1)}
 input.long {width: 30em}
 input.short {width: 10em}
 textarea.small {width: 30em; height: 10em}
@@ -196,25 +163,11 @@ h2 {
 	text-align: left;
 	text-indent: .5em;
 }
-
-#project-list .list-item:nth-child(even) {
-	background-color: #CACACA
-}
-
-#project-list .header li,#project-list .list-item li {
-	flex: 2
-}
-
-#project-list .header li:nth-child(1),#project-list .list-item li:nth-child(1)
-	{
-	flex: 1;
-	text-align: center
-}
-
-#project-list .header li:nth-child(2),#project-list .list-item li:nth-child(2)
-	{
-	flex: 3
-}
+#project-list .list-item:nth-child(even){background-color: #CACACA}
+#project-list .header li,#project-list .list-item li {flex: 2}
+#project-list .header li:nth-child(1),#project-list .list-item li:nth-child(1){flex: 1;text-align: center}
+#project-list .list-item li:nth-child(even){background-color: #fafafa}
+#project-list .header li:nth-child(2),#project-list .list-item li:nth-child(2){flex: 3}
 
 /* ----------------- 项目管理-新增 ------------------------*/
 #project-add form {padding: 1em}
