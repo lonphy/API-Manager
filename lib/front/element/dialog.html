@@ -31,11 +31,19 @@
                     var tpl = tpls.getElementById('l5-dialog');
                     var clone = document.importNode(tpl.content, true);
                     this.createShadowRoot().appendChild(clone);
-                    console.log(this);
                 }
             },
             attachedCallback: {
-                value: function () {/*console.log('insert');*/}
+                value: function () {
+                    function clickHandle(e){
+                        e.preventDefault();
+                        e.stopImmediatePropagation();
+                        this.offsetParent.close();
+                    }
+                    return function() {
+                        this.shadowRoot.querySelector('button').addEventListener('click', clickHandle, false);
+                    }
+                }()
             },
             detachedCallback: {
                 value: function () {/*console.log('delete');*/}
