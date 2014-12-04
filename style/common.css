@@ -135,7 +135,7 @@ textarea.small {width: 30em; height: 10em}
 }
 
 
-/* ----------------- 项目管理列表 ------------------------*/
+/* ----------------- 通用列表 ------------------------*/
 h2 {
 	border-bottom: solid 1px #3A373A;
 	height: 2em;
@@ -144,7 +144,7 @@ h2 {
 	position: relative
 }
 
-#project-list .header {
+.list-header {
 	background-color: #942929;
 	height: 2em;
 	line-height: 2em;
@@ -156,18 +156,18 @@ h2 {
 	margin-top: 1em;
 }
 
-#project-list .list-item {
+.list-item {
 	height: 2.2em;
 	line-height: 2.2em;
 	display: flex;
 	text-align: left;
 	text-indent: .5em;
 }
-#project-list .list-item:nth-child(even){background-color: #CACACA}
-#project-list .header li,#project-list .list-item li {flex: 2}
-#project-list .header li:nth-child(1),#project-list .list-item li:nth-child(1){flex: 1;text-align: center}
-#project-list .list-item li:nth-child(even){background-color: #fafafa}
-#project-list .header li:nth-child(2),#project-list .list-item li:nth-child(2){flex: 3}
+.list-item:nth-child(even){background-color: #CACACA}
+.list-header li,.list-item li {flex: 2}
+.list-header li:nth-child(1),.list-item li:nth-child(1){flex: 1;text-align: center}
+.list-item li:nth-child(even){background-color: #fafafa}
+.list-header li:nth-child(2),.list-item li:nth-child(2){flex: 3}
 
 /* ----------------- 项目管理-新增 ------------------------*/
 #project-add form {padding: 1em}

@@ -38,7 +38,13 @@
                     function clickHandle(e){
                         e.preventDefault();
                         e.stopImmediatePropagation();
-                        this.offsetParent.close();
+                        var path = Array.prototype.slice.call(e.path);
+                        for(var i= 0,l=path.length;i<l;++i){
+                            if (path[i] instanceof ShadowRoot){
+                                path[i].host.close();
+                                break;
+                            }
+                        }
                     }
                     return function() {
                         this.shadowRoot.querySelector('button').addEventListener('click', clickHandle, false);

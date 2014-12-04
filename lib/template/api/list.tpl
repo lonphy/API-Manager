@@ -1,10 +1,10 @@
-<h2>Project Lists <a href="#Project.add" class="title-button">New Project</a></h2>
+<h2>APIs <a href="#Project.add" class="title-button">New API</a></h2>
 <ul class="list-header">
     <li>ID</li>
-    <li>Project Name</li>
+    <li>API Name</li>
     <li>Create Time</li>
     <li>Short Desc</li>
-    <li>API Number</li>
+    <li>Param Number</li>
     <li>Operate</li>
 </ul>
 
@@ -17,7 +17,7 @@
     <li>#{val['api_number']}#</li>
     <li>
         <a href="#Project.edit?pid=#{val['id']}#">Edit</a> | 
-        <a href="#Api.list?pid=#{val['id']}#">APIs</a> |
+        <a href="#Project.apis?pid=#{val['id']}#">APIs</a> | 
         <a href="#Project.remove?pid=#{val['id']}#">Remove</a>
     </li>
 </ul>
