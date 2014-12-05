@@ -169,16 +169,16 @@ h2 {
 .list-item li:nth-child(even){background-color: #fafafa}
 .list-header li:nth-child(2),.list-item li:nth-child(2){flex: 3}
 
-/* ----------------- 项目管理-新增 ------------------------*/
-#project-add form {padding: 1em}
-#project-add form p {height: 3em;line-height: 3em}
-#project-add form p:last-child {padding-left: 10.5em}
-#project-add form p.high {height: 11em}
-#project-add form label {
+/* ----------------- 通用表单 ------------------------*/
+form.op-form {padding: 1em}
+form.op-form p {height: 3em;line-height: 3em}
+form.op-form p:last-child {padding-left: 10.5em}
+form.op-form p.high {height: 11em}
+form.op-form label {
 	display: inline-block;
 	width: 10em;
 	text-align: right;
 	margin-right: .5em
 }
-#project-add form label:after {content: ":"}
-#project-add form p span {margin-right: 1em}
+form.op-form label:after {content: ":"}
+form.op-form p span {margin-right: 1em}

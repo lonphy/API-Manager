@@ -1,4 +1,4 @@
-<h2>APIs <a href="#Project.add" class="title-button">New API</a></h2>
+<h2>APIs <a href="#Api.add" class="title-button">New API</a></h2>
 <ul class="list-header">
     <li>ID</li>
     <li>API Name</li>
@@ -16,9 +16,9 @@
     <li>#{val['desc']}#</li>
     <li>#{val['api_number']}#</li>
     <li>
-        <a href="#Project.edit?pid=#{val['id']}#">Edit</a> | 
-        <a href="#Project.apis?pid=#{val['id']}#">APIs</a> | 
-        <a href="#Project.remove?pid=#{val['id']}#">Remove</a>
+        <a href="#Api.edit?id=#{val['id']}#">Edit</a> | 
+        <a href="#Api.remove?id=#{val['id']}#">Remove</a> |
+        <a href="#Debug.single?aid=#{val['id']}#">Debug</a>
     </li>
 </ul>
 #{/foreach}#
