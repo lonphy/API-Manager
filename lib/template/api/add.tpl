@@ -2,11 +2,12 @@
 <form id="api-form" class="op-form">
     <p>
         <label>Name</label>
-        <input type="text" name="name" class="long" placeholder="APIs 's project name" maxlength="64" value="#{info?info.name:""}#" required>
+        <input type="text" name="title" class="long" placeholder="APIs 's name" maxlength="64" value="#{info?info.name:""}#" required>
     </p>
     <p>
         <label>URL</label>
-        <input type="url" name="baseURI" class="long" placeholder="API's base url" maxlength="128" value="#{info?info.baseUrl:""}#" required>
+        <span>#{project.baseUrl}#</span>
+        <input type="text" name="uri" class="long" placeholder="API's uri" maxlength="128" value="#{info?info.uri:""}#" required>
     </p>
 
     <p>
@@ -19,7 +20,12 @@
             <option value="GET">HEAD</option>
         </select>
     </p>
-
+    <p>
+        <label>Params</label>
+        <dl>
+            <dt><span>name</span><span>type</span><span>default value</span></dt>
+        </dl>
+    </p>
     <p class="high">
         <label>Desc</label>
         <textarea class="small" name="describe" placeholder="enter some desc. for your project." maxlength="1024" required>#{info?info.desc:""}#</textarea>

@@ -1,4 +1,5 @@
-<h2>APIs <a href="#Api.add" class="title-button">New API</a></h2>
+<h2>APIs | <a href="#Api.add?pid=#{projectId}#">New API</a>
+<a href="#Project.list" class="title-button">Go Back</a></h2>
 <ul class="list-header">
     <li>ID</li>
     <li>API Name</li>
