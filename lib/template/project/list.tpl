@@ -12,7 +12,7 @@
 <ul class="list-item">
     <li>#{val['id']}#</li>
     <li>#{val['name']}#</li>
-    <li>#{val['_time']}#</li>
+    <li>#{val['_time'] | DateFormat:true}#</li>
     <li>#{val['desc']}#</li>
     <li>#{val['api_number']}#</li>
     <li>

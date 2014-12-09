@@ -166,7 +166,7 @@ h2 {
 .list-item:nth-child(even){background-color: #CACACA}
 .list-header li,.list-item li {flex: 2}
 .list-header li:nth-child(1),.list-item li:nth-child(1){flex: 1;text-align: center}
-.list-item li:nth-child(even){background-color: #fafafa}
+.list-item li:nth-child(even){background-color:rgba(31, 150, 194, 0.11)}
 .list-header li:nth-child(2),.list-item li:nth-child(2){flex: 3}
 
 /* ----------------- 通用表单 ------------------------*/

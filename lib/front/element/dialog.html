@@ -9,12 +9,12 @@
         prototype: Object.create(HTMLElement.prototype, {
             open: {
                 value: function () {
-                    this.classList.add('dialog-show');
+                    this.setAttribute("open", true);
                 }
             },
             close: {
                 value: function () {
-                    this.classList.remove('dialog-show');
+                    this.removeAttribute("open");
                 }
             },
             type: {
@@ -63,7 +63,7 @@
 <template id="l5-dialog">
     <style>
     @-webkit-keyframes dialog /* Safari 和 Chrome */ {
-        0%  {transform: translateY(-600px) }
+        0%  { opacity:0;transform: translateY(-600px) }
         60% { opacity:1; transform:translateY(120px) }
         80% { opacity:1; transform:translateY(94px) }
         94% { opacity:1; transform:translateY(110px) }
@@ -83,9 +83,11 @@
         font: 13px/1.2 normal Segoe UI, Verdana, sans-serif;
         display: flex;
         flex-direction: column;
+        -webkit-animation: dialog .6s ease-in .2s alternate both;
+        top: 60px;
     }
 
-    :host(.dialog-show:host ) {
+    :host([open]:host ) {
         -webkit-animation: dialog .6s ease-in .2s both;
         top: 60px;
     }
@@ -124,6 +126,11 @@
         outline: none;
     }
     button:hover {border-radius: .4em 1.8em}
+    :host([type=error]:host ){
+        box-shadow: 2px 2px 16px 8px rgba(119, 4, 4, 0.61);
+    }
+    :host([type=error]:host ) h4{ background-image: -webkit-radial-gradient(left top,rgb(232, 25, 25),rgb(89, 4, 4))}
+    :host([type=error]:host ) button { background-image: -webkit-radial-gradient(left top, rgba(215, 4, 4, 1),rgba(145, 0, 0, 0.61))}
     </style>
     <h4>Message</h4>
 
