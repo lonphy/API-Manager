@@ -20,12 +20,19 @@
             <option value="GET">HEAD</option>
         </select>
     </p>
-    <p>
+    <div>
         <label>Params</label>
         <dl>
-            <dt><span>name</span><span>type</span><span>default value</span></dt>
+            <dt><span>name</span><span>type</span><span>default</span><span>Option</span><span>action</span></dt>
+            <dd>
+                <span><input type="text"></span>
+                <span><select><option>Int8</option></select></span>
+                <span><input type="text"></span>
+                <span><input type="checkbox"></span>
+                <span><input type="button" value="Add"></span>
+            </dd>
         </dl>
-    </p>
+    </div>
     <p class="high">
         <label>Desc</label>
         <textarea class="small" name="describe" placeholder="enter some desc. for your project." maxlength="1024" required>#{info?info.desc:""}#</textarea>

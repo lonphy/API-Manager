@@ -171,7 +171,7 @@ h2 {
 
 /* ----------------- 通用表单 ------------------------*/
 form.op-form {padding: 1em}
-form.op-form p {height: 3em;line-height: 3em}
+form.op-form p{height: 3em;line-height: 3em}
 form.op-form p:last-child {padding-left: 10.5em}
 form.op-form p.high {height: 11em}
 form.op-form label {
@@ -182,3 +182,25 @@ form.op-form label {
 }
 form.op-form label:after {content: ":"}
 form.op-form p span {margin-right: 1em}
+form.op-form div {line-height: 2.2em;display: flex;margin-bottom: 1em}
+form.op-form dl {
+    min-width: 48em;
+    background-color: rgba(61, 197, 211, 0.1);
+    border-radius: 3px;
+    overflow: hidden;
+    padding: 0 0 10px;
+    box-shadow: 0 2px 3px rgba(52, 52, 52, 0.3);
+}
+form.op-form dt {display: flex;background:rgba(41, 165, 61, 0.2);box-shadow: 0 1px 3px #84B095;margin-bottom: 10px}
+form.op-form dd {display: flex;}
+form.op-form dt span,form.op-form dd span {flex:1}
+form.op-form dt span{text-align: center;text-transform: uppercase;border-left: 1px solid #A6D3BA;}
+form.op-form dt span:first-child{border:none}
+form.op-form dd span {text-align: center}
+form.op-form dd input[type=text] {width: 80%}
+form.op-form div input[type="button"] {
+    background: rgba(60, 157, 101, 0.2);
+    width: 60%;
+    border: none;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.61);
+}

@@ -62,13 +62,20 @@
 </script>
 <template id="l5-dialog">
     <style>
-    @-webkit-keyframes dialog /* Safari 和 Chrome */ {
+    @-webkit-keyframes dialog {
         0%  { opacity:0;transform: translateY(-600px) }
         60% { opacity:1; transform:translateY(120px) }
-        80% { opacity:1; transform:translateY(94px) }
-        94% { opacity:1; transform:translateY(110px) }
-        96% { opacity:1; transform:translateY(102px) }
-        100%{ opacity:1; transform:translateY(106px);z-index:50 }
+        80% {transform:translateY(94px) }
+        94% {transform:translateY(110px) }
+        96% {transform:translateY(102px) }
+        100%{opacity:1;transform:translateY(106px);z-index:50 }
+    }
+    @-webkit-keyframes dialog-hide {
+        0%{opacity:1;transform:translateY(106px) scale(1)}
+        10% {opacity:1;transform:translateY(106px) scale(2) }
+        40% {opacity:1;transform:translateY(106px) scale(0.6) }
+        60% { opacity:1; transform:translateY(106px) scale(1.6) }
+        100%  { opacity:1;transform:translateY(106px) scale(0) }
     }
     :host {
         position: absolute;
@@ -77,14 +84,13 @@
         width: 420px;
         height: 240px;
         left: calc(50% - 210px);
-        top: 0;
+        top: -240px;
         opacity: 0;
         background: #fff;
         font: 13px/1.2 normal Segoe UI, Verdana, sans-serif;
         display: flex;
         flex-direction: column;
-        -webkit-animation: dialog .6s ease-in .2s alternate both;
-        top: 60px;
+        -webkit-animation: dialog-hide .5s ease-in;
     }
 
     :host([open]:host ) {
