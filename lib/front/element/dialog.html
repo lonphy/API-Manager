@@ -63,19 +63,19 @@
 <template id="l5-dialog">
     <style>
     @-webkit-keyframes dialog {
-        0%  { opacity:0;transform: translateY(-600px) }
-        60% { opacity:1; transform:translateY(120px) }
-        80% {transform:translateY(94px) }
-        94% {transform:translateY(110px) }
-        96% {transform:translateY(102px) }
-        100%{opacity:1;transform:translateY(106px);z-index:50 }
+        0%  { opacity:0;transform:translateY(-600px) }
+        60% { opacity:1; transform:translateY(366px) }
+        80% {transform:translateY(342px) }
+        94% {transform:translateY(370px) }
+        96% {transform:translateY(352px) }
+        100%{opacity:1;transform:translateY(366px);z-index:50 }
     }
     @-webkit-keyframes dialog-hide {
-        0%{opacity:1;transform:translateY(106px) scale(1)}
-        10% {opacity:1;transform:translateY(106px) scale(2) }
-        40% {opacity:1;transform:translateY(106px) scale(0.6) }
-        60% { opacity:1; transform:translateY(106px) scale(1.6) }
-        100%  { opacity:1;transform:translateY(106px) scale(0) }
+        0%{opacity:1;transform:translateY(366px) scale(1)}
+        10% {opacity:1;transform:translateY(366px) scale(2) }
+        40% {opacity:1;transform:translateY(366px) scale(0.6) }
+        60% {opacity:1;transform:translateY(366px) scale(1.6) }
+        100%  {opacity:1;transform:translateY(366px) scale(0) }
     }
     :host {
         position: absolute;
@@ -95,7 +95,6 @@
 
     :host([open]:host ) {
         -webkit-animation: dialog .6s ease-in .2s both;
-        top: 60px;
     }
 
     h4 {
