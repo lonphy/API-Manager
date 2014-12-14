@@ -26,7 +26,7 @@
             <dt><span>name</span><span>type</span><span>default</span><span>Option</span><span>action</span></dt>
             <dd>
                 <span><input type="text"></span>
-                <span><select><option>Int8</option></select></span>
+                <span><select id="types"><option>Int8</option></select></span>
                 <span><input type="text"></span>
                 <span><input type="checkbox"></span>
                 <span><input type="button" value="Add"></span>
