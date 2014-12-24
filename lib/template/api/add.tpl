@@ -22,7 +22,7 @@
     </p>
     <div>
         <label>Params</label>
-        <dl>
+        <dl id="api-list-view">
             <dt><span>name</span><span>type</span><span>default</span><span>Option</span><span>action</span></dt>
             <dd>
                 <span><input type="text"></span>
