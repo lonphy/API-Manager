@@ -21,17 +21,7 @@
         </select>
     </p>
     <div>
-        <label>Params</label>
-        <dl id="api-list-view">
-            <dt><span>name</span><span>type</span><span>default</span><span>Option</span><span>action</span></dt>
-            <dd>
-                <span><input type="text"></span>
-                <span><select id="types"><option>Int8</option></select></span>
-                <span><input type="text"></span>
-                <span><input type="checkbox"></span>
-                <span><input type="button" value="Add"></span>
-            </dd>
-        </dl>
+        <label>Params</label><dl id="api-list-view"></dl>
     </div>
     <p class="high">
         <label>Desc</label>
