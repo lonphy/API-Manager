@@ -57,13 +57,16 @@
     </form>
     <script>
         var view = new L5.ListView({
-            header: "<span>KEY</span> <span>VALUE</span>",
+            header: "<span>KEY</span> <span>VALUE</span><span>optional</span>",
             container: "dl",
-            rowTpl: "<span><input type='text' name='key' value='${key}'></span><span><input type='text' name='value' value='${value}'></span>",
+            rowTpl: "<span><input type='text' name='key' value='${key}'></span>" +
+                    "<span><input type='text' name='value' value='${value}'></span>" +
+                    "<span><input type='checkbox' name='optional' ${@checked:optional}></span>",
             data: [
                 {
                     key: "id",
-                    value: "12"
+                    value: "12",
+                    optional: true
                 },
                 {
                     key: "name",
